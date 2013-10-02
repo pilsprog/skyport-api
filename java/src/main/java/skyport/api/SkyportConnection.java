@@ -49,14 +49,14 @@ public class SkyportConnection {
     }
     
     public boolean sendPacket(String json) {
-	boolean sendt = true;
+	boolean sent = true;
 	try {
 	    out.writeUTF(json);
 	} catch (IOException e) {
-	    sendt = false;
+	    sent = false;
 	    System.out.println("Could not send packet.");
 	}
-	return sendt;
+	return sent;
     }
     
     public String recievePacket() {
