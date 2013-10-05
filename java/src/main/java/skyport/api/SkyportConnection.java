@@ -1,8 +1,10 @@
 package skyport.api;
 
-import java.io.DataInputStream;
-import java.io.DataOutputStream;
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
 import java.net.Socket;
 import java.net.UnknownHostException;
 
@@ -11,8 +13,8 @@ public class SkyportConnection {
     private int port; 
     private Socket socket;
     
-    private DataOutputStream out;
-    private DataInputStream in;
+    private BufferedWriter out;
+    private BufferedReader in;
     
     public SkyportConnection(String host, int port) {
 	this.host = host;
@@ -32,14 +34,14 @@ public class SkyportConnection {
 	}
 	
 	try {
-	    out = new DataOutputStream(socket.getOutputStream());
+	    out = new BufferedWriter(new OutputStreamWriter(socket.getOutputStream()));
 	} catch (IOException e) {
 	    System.out.println("Failed to get output stream.");
 	    connected = false;
 	}
 	
 	try {
-	    in = new DataInputStream(socket.getInputStream());
+	    in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
 	} catch (IOException e) {
 	    System.out.println("Failed to get input stream");
 	    connected = false;
@@ -48,10 +50,10 @@ public class SkyportConnection {
 	return connected;
     }
     
-    public boolean sendPacket(String json) {
+    public boolean send(String json) {
 	boolean sent = true;
 	try {
-	    out.writeUTF(json);
+	    out.write(json);
 	} catch (IOException e) {
 	    sent = false;
 	    System.out.println("Could not send packet.");
@@ -59,10 +61,10 @@ public class SkyportConnection {
 	return sent;
     }
     
-    public String recievePacket() {
+    public String read() {
 	String json = "";
 	try {
-	    json = in.readUTF();
+	    json = in.readLine();
 	} catch (IOException e) {
 	    System.out.println("Could not recieve packet properly.");
 	}
