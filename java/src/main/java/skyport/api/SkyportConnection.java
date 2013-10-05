@@ -54,6 +54,8 @@ public class SkyportConnection {
 	boolean sent = true;
 	try {
 	    out.write(json);
+	    out.newLine();
+	    out.flush();
 	} catch (IOException e) {
 	    sent = false;
 	    System.out.println("Could not send packet.");
