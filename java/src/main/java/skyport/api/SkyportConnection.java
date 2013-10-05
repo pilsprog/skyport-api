@@ -15,7 +15,7 @@ public class SkyportConnection {
     
     private BufferedWriter out;
     private BufferedReader in;
-    
+    	
     public SkyportConnection(String host, int port) {
 	this.host = host;
 	this.port = port;
@@ -64,7 +64,7 @@ public class SkyportConnection {
     }
     
     public String read() {
-	String json = "";
+	String json = null;
 	try {
 	    json = in.readLine();
 	} catch (IOException e) {
