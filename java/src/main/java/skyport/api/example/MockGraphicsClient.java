@@ -38,9 +38,7 @@ public class MockGraphicsClient implements Runnable {
 
         String ready = gson.toJson(new ReadyMessage());
         while (message != null) {
-            System.out.println(message);
             message = conn.read();
-
             conn.send(ready);
         }
     }
