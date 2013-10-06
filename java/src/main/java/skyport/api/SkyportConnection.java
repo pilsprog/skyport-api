@@ -26,24 +26,24 @@ public class SkyportConnection {
         try {
             socket = new Socket(host, port);
         } catch (UnknownHostException e) {
-            System.out.println("The host '" + host + ":" + port + "' does not exist.");
+            System.err.println("The host '" + host + ":" + port + "' does not exist.");
             connected = false;
         } catch (IOException e) {
-            System.out.println("Problem with connection.");
+            System.err.println("Problem with connection.");
             connected = false;
         }
 
         try {
             out = new BufferedWriter(new OutputStreamWriter(socket.getOutputStream()));
         } catch (IOException e) {
-            System.out.println("Failed to get output stream.");
+            System.err.println("Failed to get output stream.");
             connected = false;
         }
 
         try {
             in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
         } catch (IOException e) {
-            System.out.println("Failed to get input stream");
+            System.err.println("Failed to get input stream");
             connected = false;
         }
 
@@ -58,7 +58,7 @@ public class SkyportConnection {
             out.flush();
         } catch (IOException e) {
             sent = false;
-            System.out.println("Could not send packet.");
+            System.err.println("Could not send packet.");
         }
         return sent;
     }
@@ -68,7 +68,7 @@ public class SkyportConnection {
         try {
             json = in.readLine();
         } catch (IOException e) {
-            System.out.println("Could not recieve packet properly.");
+            System.err.println("Could not recieve packet properly.");
         }
         return json;
     }
@@ -77,7 +77,7 @@ public class SkyportConnection {
         try {
             this.socket.close();
         } catch (IOException e) {
-            System.out.println("Could not close connection.");
+            System.err.println("Could not close connection.");
         }
     }
 }
