@@ -77,7 +77,7 @@ public class RandomPlayer implements Runnable {
 	    case "droid":
 		level = me.getWeapon("droid").getLevel();
 		List<Direction> dirs = new ArrayList<Direction>();
-		for(int steps = 3+level; steps > 0; steps--) {
+		for(int steps = 2+level; steps > 0; steps--) {
 		    dirs.add(this.randomDirection());
 		}
 		this.client.fireDroid(dirs);
