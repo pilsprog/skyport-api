@@ -5,6 +5,8 @@ import java.util.List;
 import skyport.api.game.Direction;
 import skyport.api.game.GameState;
 import skyport.api.game.Player;
+import skyport.api.game.Point;
+import skyport.api.game.adapter.PointAdapter;
 import skyport.api.message.DroidAttackMessage;
 import skyport.api.message.ErrorMessage;
 import skyport.api.message.HandshakeMessage;
@@ -26,6 +28,7 @@ public class SkyportClient {
 
     private Gson gson = new GsonBuilder()
     	.setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_DASHES)
+    	.registerTypeAdapter(Point.class, new PointAdapter())
     	.create();
     
     private String json;

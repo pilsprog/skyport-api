@@ -9,6 +9,7 @@ import skyport.api.SkyportClient;
 import skyport.api.game.Direction;
 import skyport.api.game.GameState;
 import skyport.api.game.Player;
+import skyport.api.game.Point;
 
 public class RandomPlayer implements Runnable {
 
@@ -66,11 +67,10 @@ public class RandomPlayer implements Runnable {
 		break;
 		
 	    case "mortar":
-		int posj = me.getJ();
-		int posk = me.getK();
+		Point point = me.getPoint();
 		level = me.getWeapon("mortar").getLevel();
-		int j = random.nextInt(level + 2) + posj;
-		int k = random.nextInt(level + 2) + posk;
+		int j = random.nextInt(level + 2) + point.getJ();
+		int k = random.nextInt(level + 2) + point.getK();
 		this.client.fireMortar(j, k);
 		break;
 		
