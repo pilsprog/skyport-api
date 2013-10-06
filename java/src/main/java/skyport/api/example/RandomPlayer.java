@@ -67,7 +67,7 @@ public class RandomPlayer implements Runnable {
 		break;
 		
 	    case "mortar":
-		Point point = me.getPoint();
+		Point point = me.getPosition();
 		level = me.getWeapon("mortar").getLevel();
 		int j = random.nextInt(level + 2) + point.getJ();
 		int k = random.nextInt(level + 2) + point.getK();

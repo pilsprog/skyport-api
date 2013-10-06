@@ -16,11 +16,7 @@ public class Player {
     public Weapon getPrimary() {
 	return this.primaryWeapon;
     }
-    
-   public Point getPoint() {
-       return position;
-   }
-    
+
     public Weapon getSecondary() {
 	return this.secondaryWeapon;
     }
@@ -33,5 +29,9 @@ public class Player {
 	} else {
 	    return null;
 	}
+    }
+
+    public Point getPosition() {
+	return position;
     }
 }
