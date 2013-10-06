@@ -40,7 +40,7 @@ public class SkyportClient {
 
     public void sendMessage(Message message) {
         json = gson.toJson(message);
-        System.out.println("Send json: " + json);
+        System.out.println("Send: " + json);
         conn.send(json);
     }
 
@@ -60,6 +60,7 @@ public class SkyportClient {
 
     public Message nextMessage() {
         json = conn.read();
+        System.out.println("Receive: " + json);
         ErrorMessage message = gson.fromJson(json, ErrorMessage.class);
         if (message == null) {
             throw new RuntimeException("Message is null, probably lost connection.");
