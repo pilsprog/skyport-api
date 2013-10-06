@@ -1,11 +1,9 @@
-package skyport.api.message;
+package skyport.api.game;
 
 import java.util.List;
 
-import skyport.api.game.Map;
-import skyport.api.game.Player;
 
-public class GameState extends Message {
+public class GameState {
     private int turn;
     private List<Player> players;
     private Map map;

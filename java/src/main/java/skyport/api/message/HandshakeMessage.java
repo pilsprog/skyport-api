@@ -1,12 +1,11 @@
 package skyport.api.message;
 
-public class Handshake extends Message {
-    
-    private String message = "connect";
+public class HandshakeMessage extends Message {
     private int revision = 1;
     private String name;
     
-    public Handshake(String name) {
+    public HandshakeMessage(String name) {
+	this.message = "connect";
         this.name = name;
     }
 

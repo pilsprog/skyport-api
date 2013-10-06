@@ -1,8 +1,5 @@
 package skyport.api.example;
 
-import java.io.IOException;
-import java.net.UnknownHostException;
-
 import skyport.api.SkyportConnection;
 
 import com.google.gson.FieldNamingPolicy;
@@ -10,7 +7,7 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
 
-public class MockGraphicsClient {
+public class MockGraphicsClient implements Runnable {
     static Gson gson = new GsonBuilder()
     	.setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_DASHES)
     	.create();
@@ -26,8 +23,17 @@ public class MockGraphicsClient {
 	String message = "ready";
     }
     
-    public static void main(String[] args) throws UnknownHostException, IOException, InterruptedException {
-	SkyportConnection conn = new SkyportConnection("localhost", 54331);
+    private String host;
+    private int port;
+    
+    public MockGraphicsClient(String host, int port) {
+	this.host = host;
+	this.port = port;
+    }
+
+    @Override
+    public void run() {
+	SkyportConnection conn = new SkyportConnection(host, port);
 	conn.connect();
 	
 	String message = gson.toJson(new ConnectMessage());
@@ -39,7 +45,6 @@ public class MockGraphicsClient {
 	    message = conn.read();
 	    
 	    conn.send(ready);
-	}
-	
+	}	
     }
 }
