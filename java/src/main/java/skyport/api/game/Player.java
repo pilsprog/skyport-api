@@ -33,5 +33,11 @@ public class Player {
 
     public Point getPosition() {
 	return position;
+    public int getScore() {
+        return score;
+    }
+
+    public int getHealth() {
+        return health;
     }
 }

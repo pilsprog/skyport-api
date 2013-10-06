@@ -9,4 +9,5 @@ public class LaserAttackMessage extends ActionMessage {
     	    this.direction = direction;
     	}
     	
+    @SuppressWarnings("unused")
 }
