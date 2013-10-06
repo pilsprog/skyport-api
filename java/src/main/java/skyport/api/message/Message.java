@@ -1,9 +1,9 @@
 package skyport.api.message;
 
 public class Message {
-    protected String message; 
-    
+    protected String message;
+
     public String getMessage() {
-	return message;
+        return message;
     }
 }

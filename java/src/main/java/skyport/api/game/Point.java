@@ -3,18 +3,20 @@ package skyport.api.game;
 public class Point {
     private final int k;
     private final int j;
-    
+
     public Point(int k, int j) {
-	this.k = k;
-	this.j = j;
+        this.k = k;
+        this.j = j;
     }
-    
+
     public int getK() {
-	return k;
+        return k;
     }
-    
+
     public int getJ() {
-	return j;
+        return j;
+    }
+
     public int distance(Point point) {
         int dk = Math.abs(k - point.k);
         int dj = Math.abs(j - point.j);
