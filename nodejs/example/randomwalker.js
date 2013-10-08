@@ -1,4 +1,4 @@
-var skyport = require('../api/nodejs/skyport.js');
+var skyport = require('../skyport.js');
 if(process.argv.length != 3){
     console.log("Usage: node randomwalker.js name_of_the_bot");
     process.exit();
@@ -90,4 +90,3 @@ connection.on('action', got_action);
 connection.on('error', got_error);
 connection.on('endturn', got_endturn);
 connection.connect();
-

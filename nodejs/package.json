@@ -1,0 +1,16 @@
+{
+  "name": "skyport-api",
+  "version": "0.0.1",
+  "description": "Javascript API for skyport",
+  "main": "skyport.js",
+  "directories": {
+    "example": "example"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/pilsprog/skyport-api/"
+  }
+}
