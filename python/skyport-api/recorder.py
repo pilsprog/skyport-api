@@ -2,46 +2,46 @@
 
 import sys
 
-from twisted.internet import reactor
-from twisted.internet.protocol import ClientFactory
-from twisted.protocols.basic import LineReceiver
+from skyport import SkyportReceiver, SkyportTransmitter
+from socket import socket, timeout, AF_INET, SOCK_STREAM
 
 PASS = "supersecretpassword"
-OUTFILE = ""
-FH = None
 
-class SkyportConnection(LineReceiver): # twisted-specific things
-    receiver = None     # the SkyportReceiver object
-    transmitter = None  # the SkyportTransmitter object
-    delimiter = "\n"    # need to set this so that twisted parses the line endings correctly
+sock = socket(AF_INET, SOCK_STREAM)
+sock.connect(('127.0.0.1', 54321))
 
-    def connectionMade(self): # twisted has successfully established the connection for us
-        print("got connection")
-        self.sendLine('{"message":"connect", "revision":1, "password":%s, "laserstyle":"start-stop"}' % PASS)
-        
-    def lineReceived(self, line):
-        print("got line: %s" % line)
-        FH.write(line + "\n")
-        if line == '{"message":"endactions"}':
-            self.sendLine('{"message":"ready"}')
-        
-class SkyportConnectionFactory(ClientFactory):
-    protocol = SkyportConnection
-    def clientConnectionFailed(self, connector, reason):
-        print 'connection failed:' + reason.getErrorMessage()
-        reactor.stop()
+def send_line(line):
+    print("sending: '%s'" % line)
+    if sock.sendall(line + "\n") != None:
+        print("Error sending Data!")
 
-    def clientConnectionLost(self, connector, reason):
-        print 'connection lost:' + reason.getErrorMessage()
-        reactor.stop()
+def read_packet():
+    try:
+        line = sock.recv(1)
+        if not ret:
+            print("Disconnected!")
+            sys.exit(1)
+        return line[:-1]
+    except socket.timeout:
+        print("timeout!")
+        return None
+    except socket.error as e:
+        print("error: %s" % e)
+        sys.exit(1)
 
 def main():
-    factory = SkyportConnectionFactory()
-    reactor.connectTCP('localhost', 54331, factory)
-    reactor.run()
+    transmitter = SkyportTransmitter(send_line)
+    transmitter.send_message({"message":"connect",
+                              "revision":1,
+                              "password":PASS,
+                              "laserstyle":"start-stop"})
+
+    while True:
+        line = read_packet()
+        print(line)
+        if line == '{"message":"endactions"}':
+            transmitter.send_message({"message":"ready"})
+
 
 if __name__ == '__main__':
-    assert(len(sys.argv) == 2)
-    OUTFILE = sys.argv[1]
-    FH = open(OUTFILE, "w")
     main()
