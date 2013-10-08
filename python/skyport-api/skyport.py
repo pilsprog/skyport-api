@@ -1,4 +1,5 @@
 import json
+
 class SkyportReceiver:
 	handler_handshake_successful = None
 	handler_error = None
@@ -6,7 +7,7 @@ class SkyportReceiver:
 	handler_gamestart = None
 	handler_action = None
 	handler_endturn = None
-	
+
 	def __init__(self):
 		pass
 
@@ -31,10 +32,14 @@ class SkyportReceiver:
 		elif json_packet["message"] == "gamestate":
 			if json_packet["turn"] == 0:
 				if self.handler_gamestart != None:
-					self.handler_gamestart(json_packet["turn"], json_packet["map"], json_packet["players"])
+					self.handler_gamestart(json_packet["turn"],
+                                           json_packet["map"],
+                                           json_packet["players"])
 			else:
 				if self.handler_gamestate != None:
-					self.handler_gamestate(json_packet["turn"], json_packet["map"], json_packet["players"])	  
+					self.handler_gamestate(json_packet["turn"],
+                                           json_packet["map"],
+                                           json_packet["players"])
 		elif json_packet["message"] == "action":
 			# def gotAction(self, actionType, who, restData):
 			if self.handler_action != None:
@@ -48,32 +53,51 @@ class SkyportReceiver:
 				self.handler_endturn()
 		else:
 			print("unknown message type: '%s'" % json_packet["message"])
-		
+
 class SkyportTransmitter:
 	handler_send = None
 	def __init__(self, send_function):
 		self.handler_send = send_function
+
+    def send_message(self, message):
+        self.handler_send(json.dumps(message))
+
 	def send_loadout(self, primary_weapon, secondary_weapon):
-		self.handler_send(json.dumps({"message":"loadout", "primary-weapon": primary_weapon, 
-								 "secondary-weapon": secondary_weapon}))
+		self.send_message({"message":"loadout",
+                           "primary-weapon": primary_weapon,
+                           "secondary-weapon": secondary_weapon})
+
 	def send_handshake(self, name):
-		self.handler_send(json.dumps({"message":"connect", "revision": 1, "name": name}))
-	
+        self.send_message({"message":"connect",
+                           "revision": 1,
+                           "name": name})
+
 	def send_move(self, whereto):
-		self.handler_send(json.dumps({"message":"action", "type": "move", "direction": whereto}))
+		self.send_message({"message":"action",
+                           "type": "move",
+                           "direction": whereto})
 
 	def attack_laser(self, direction):
-		self.handler_send(json.dumps({"message":"action", "type":"laser", "direction":direction}))
+		self.send_message({"message":"action",
+                           "type":"laser",
+                           "direction":direction})
 
 	def attack_mortar(self, j_coordinate, k_coordinate):
 		coordinates = "%i,%i" % (j_coordinate, k_coordinate);
-		self.handler_send(json.dumps({"message":"action", "type":"mortar", "coordinates":coordinates}))
+		self.send_message({"message":"action",
+                           "type":"mortar",
+                           "coordinates":coordinates})
 
 	def attack_droid(self, sequence):
-		self.handler_send(json.dumps({"message":"action", "type":"droid", "sequence":sequence}))
+		self.send_message({"message":"action",
+                           "type":"droid",
+                           "sequence":sequence})
 
 	def mine(self):
-		self.handler_send(json.dumps({"message":"action", "type":"mine"}))
-        
+		self.send_message({"message":"action",
+                           "type":"mine"})
+
 	def upgrade(self, weapon):
-		self.handler_send(json.dumps({"message":"action", "type":"upgrade", "weapon":weapon}))
+		selfsend_message({"message":"action",
+                          "type":"upgrade",
+                          "weapon":weapon})
