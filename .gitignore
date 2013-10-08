@@ -4,8 +4,9 @@
 #*#
 *.exe
 *.dll
+
 java/.classpath
-
 java/.project
-
 /java/.settings/*
+
+python/build/*

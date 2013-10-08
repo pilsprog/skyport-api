@@ -4,7 +4,7 @@ import random
 import socket
 from socket import timeout
 import json
-sys.path.append("../api/python/")
+sys.path.append("../skyport-api/")
 import skyport
 
 assert(len(sys.argv) == 2)
@@ -56,7 +56,7 @@ def shoot_mortar_in_random_direction():
 def upgrade_random_weapon():
     #transmitter.upgrade("laser")
     transmitter.upgrade(random.choice(weapons_chosen))
-    
+
 def shoot_laser_in_random_direction():
     # requires you to select the laser as weapon, obviously
     direction = random.choice(["up", "down", "left-down", "left-up", "right-down", "right-up"])
@@ -69,7 +69,7 @@ def shoot_droid_in_random_directions():
         directions.append(random.choice(["up", "down", "left-down", "left-up", "right-down", "right-up"]))
     print("shooting droid in sequence %r" % directions)
     transmitter.attack_droid(directions)
-    
+
 def send_line(line): # sends a line to the socket
     print("sending: '%s'" % line)
     if sock.sendall(line + "\n") != None:
@@ -89,7 +89,7 @@ def got_gamestate(turn, map_obj, player_list):
         random.choice([transmitter.mine, shoot_mortar_in_random_direction,
                        shoot_laser_in_random_direction, shoot_droid_in_random_directions,
                        transmitter.mine, upgrade_random_weapon])()
-        
+
 
 def got_gamestart(turn, map_obj, player_list):
     weapons = ["mortar", "droid", "laser"]
@@ -107,7 +107,7 @@ def got_action(action_type, who, rest_data):
 def got_endturn():
     print("got endturn!")
 
-    
+
 receiver = skyport.SkyportReceiver()
 transmitter = skyport.SkyportTransmitter(send_line)
 # the SkyportTransmitter doesn't do networking on its own
@@ -132,4 +132,3 @@ while True:
     if line != None:
         print("got line: '%r'" % line)
         receiver.parse_line(line) # hand the line to SkyportReceiver to process
-
