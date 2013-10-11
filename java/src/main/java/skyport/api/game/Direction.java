@@ -2,6 +2,11 @@ package skyport.api.game;
 
 import com.google.gson.annotations.SerializedName;
 
+
+/**
+ * Describes the directions a player can move in skyport.
+ * @author Bjarte
+ */
 public enum Direction {
     up,
     down,
