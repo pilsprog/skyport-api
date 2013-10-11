@@ -11,78 +11,126 @@ import skyport.api.game.GameState;
 import skyport.api.game.Player;
 import skyport.api.game.Point;
 
+/**
+ * 
+ * A Random player of Skyport. The player chooses randomly among a set of moves.
+ * 
+ * @author Bjarte
+ */
 public class RandomPlayer implements Runnable {
 
-    private SkyportClient client;
-    private String name;
+	/**
+	 * The client connection to the skyport server.
+	 */
+	private SkyportClient client;
 
-    private final static Random random = new Random();
+	/**
+	 * The name of the player.
+	 */
+	private String name;
 
-    public RandomPlayer(String name, String host, int port) {
-        this.name = name;
-        this.client = new SkyportClient(host, port);
-    }
+	/**
+	 * A list of actions the player can perform.
+	 */
+	private List<String> actions = new ArrayList<String>();
 
-    private Direction randomDirection() {
-        int dir = random.nextInt(Direction.values().length);
-        return Direction.values()[dir];
-    }
+	private final static Random random = new Random();
 
-    private List<String> actions = new ArrayList<String>();
+	/**
+	 * Constructor.
+	 * 
+	 * @param name
+	 *            The name of the player.
+	 * @param host
+	 *            The hostname/ip of the server.
+	 * @param port
+	 *            The port that the server is running on.
+	 */
+	public RandomPlayer(String name, String host, int port) {
+		this.name = name;
 
-    @Override
-    public void run() {
-        actions.addAll(Arrays.asList("laser", "mortar", "droid"));
-        this.client.connect();
-        this.client.sendHandshake(this.name);
-        actions.remove(random.nextInt(actions.size()));
+		// Creates the connection to the server
+		this.client = new SkyportClient(host, port);
+		this.client.connect();
+		this.client.sendHandshake(this.name);
 
-        this.client.sendLoadout(actions.get(0), actions.get(1));
-        actions.add("mine");
-        actions.add("upgrade");
-        GameState state;
-        do {
-            state = this.client.nextTurn(this.name);
-            Direction action1 = randomDirection();
-            Direction action2 = randomDirection();
-            Direction action3 = randomDirection();
+		// Adds a random choice of two weapons
+		actions.addAll(Arrays.asList("laser", "mortar", "droid"));
+		actions.remove(random.nextInt(actions.size()));
 
-            Player me = state.getPlayers().get(0);
-            int level;
+		// Requests the chosen weapons
+		this.client.sendLoadout(actions.get(0), actions.get(1));
 
-            this.client.move(action1);
-            this.client.move(action2);
-            switch (actions.get(random.nextInt(actions.size()))) {
-            case "mine":
-                this.client.mine();
-                break;
+		// Adds the remaining actions
+		actions.add("mine");
+		actions.add("upgrade");
+	}
 
-            case "upgrade":
-                String weapon = actions.get(random.nextInt(2));
-                this.client.upgrade(weapon);
-                break;
+	/**
+	 * @return A random direction.
+	 */
+	private Direction randomDirection() {
+		int dir = random.nextInt(Direction.values().length);
+		return Direction.values()[dir];
+	}
 
-            case "laser":
-                this.client.fireLaser(action3);
-                break;
+	@Override
+	public void run() {
+		GameState state;
+		do {
+			// Generate the game state for the current turn
+			state = this.client.nextTurn(this.name);
 
-            case "mortar":
-                Point point = me.getPosition();
-                level = me.getWeapon("mortar").getLevel();
-                int j = random.nextInt(level + 2) + point.getJ();
-                int k = random.nextInt(level + 2) + point.getK();
-                this.client.fireMortar(j, k);
-                break;
+			// Generate directions for each action
+			Direction action1 = randomDirection();
+			Direction action2 = randomDirection();
+			Direction action3 = randomDirection();
 
-            case "droid":
-                level = me.getWeapon("droid").getLevel();
-                List<Direction> dirs = new ArrayList<Direction>();
-                for (int steps = 2 + level; steps > 0; steps--) {
-                    dirs.add(this.randomDirection());
-                }
-                this.client.fireDroid(dirs);
+			Player me = state.getPlayers().get(0);
+			int level;
 
-            }
-        } while (state != null);
-    }
+			// Move in two random directions
+			this.client.move(action1);
+			this.client.move(action2);
+
+			// Do a random action
+			switch (actions.get(random.nextInt(actions.size()))) {
+
+			// Lay down a mine
+			case "mine":
+				this.client.mine();
+				break;
+
+			// Upgrade a random weapon
+			case "upgrade":
+				String weapon = actions.get(random.nextInt(2));
+				this.client.upgrade(weapon);
+				break;
+
+			// Fire the laser
+			case "laser":
+				this.client.fireLaser(action3);
+				break;
+
+			// Fire the mortar to a random tile
+			case "mortar":
+				Point point = me.getPosition();
+				level = me.getWeapon("mortar").getLevel();
+				int j = random.nextInt(level + 2) + point.getJ();
+				int k = random.nextInt(level + 2) + point.getK();
+				this.client.fireMortar(j, k);
+				break;
+
+			// Deploy a droid to move in random directions
+			case "droid":
+				level = me.getWeapon("droid").getLevel();
+				List<Direction> dirs = new ArrayList<Direction>();
+				for (int steps = 2 + level; steps > 0; steps--) {
+					dirs.add(this.randomDirection());
+				}
+				this.client.fireDroid(dirs);
+
+			}
+		} while (state != null);
+	}
 }
