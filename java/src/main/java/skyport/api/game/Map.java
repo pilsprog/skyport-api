@@ -5,7 +5,7 @@ import java.util.Arrays;
 import java.util.List;
 
 public class Map {
-    private List<List<String>> data;
+    private List<List<Tile>> data;
     private int jLength;
     private int kLength;
 
@@ -16,11 +16,11 @@ public class Map {
         for (Point n : points) {
             int k = n.getK();
             int j = n.getJ();
-            String tile = data.get(k).get(j);
+            Tile tile = data.get(k).get(j);
             switch (tile) {
-            case "R": // Rock
-            case "S": // Spawn
-            case "V": // Void
+            case ROCK:
+            case SPAWN:
+            case VOID:
                 break;
             default:
                 if (k < kLength && j < jLength) {
