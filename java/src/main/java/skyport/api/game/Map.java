@@ -23,7 +23,24 @@ public class Map {
      */
     private int kLength;
     
-    public Tile getData(Point p){
+    /**
+     * @return The number of j-index values on the map.
+     */
+    public int getjLength() {
+		return jLength;
+	}
+    /**
+     * @return The number of k-index values on the map.
+     */
+	public int getkLength() {
+		return kLength;
+	}
+
+	/**
+	 * @param p A point on the map.
+	 * @return The Tile at the given point.
+	 */
+	public Tile getData(Point p){
     	if(p.getJ() < 0 || p.getJ() >= kLength ||
     	   p.getK() < 0 || p.getK() >= jLength){
     		return Tile.VOID;
