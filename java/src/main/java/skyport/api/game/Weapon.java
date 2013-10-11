@@ -7,13 +7,13 @@ package skyport.api.game;
  */
 public class Weapon {
     private int level;
-    private String name;
+    private WeaponType weapon;
 
     /**
      * @return The name of the weapon. 
      */
-    public String getName() {
-        return name;
+    public WeaponType getName() {
+        return weapon;
     }
 
     /**
