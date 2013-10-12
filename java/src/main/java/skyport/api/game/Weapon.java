@@ -41,30 +41,72 @@ public class Weapon {
     		}
     		break;
     	case LASER:
-    		for(int j = -(5 + level); j < 5 + level;j++){
-        			int newK = p.getK();
-        			int newJ = p.getJ() + j;
-        			if(newK < m.getkLength() && newK >= 0 
-        			    && newJ < m.getjLength() && newJ >= 0){
-        				toReturn.add(new Point(newK,newJ));
-        			}
-    		}
-    		for(int k = -(5 + level); k < 5 + level;k++){
+			for (int j = 1; j <= 5 + level; j++) {
+				int newK = p.getK();
+				int newJ = p.getJ() + j;
+				if (m.getData(new Point(newK, newJ)).equals(Tile.VOID)) {
+					break;
+				}
+				if (newK < m.getkLength() && newK >= 0 && newJ < m.getjLength()
+						&& newJ >= 0) {
+					toReturn.add(new Point(newK, newJ));
+				}
+			}
+			for (int k = 1; k <= 5 + level; k++) {
+				int newK = p.getK();
+				int newJ = p.getJ() + k;
+				if (m.getData(new Point(newK, newJ)).equals(Tile.VOID)) {
+					break;
+				}
+				if (newK < m.getkLength() && newK >= 0 && newJ < m.getjLength()
+						&& newJ >= 0) {
+					toReturn.add(new Point(newK, newJ));
+				}
+			}
+			for (int i = 1; i <= 5 + level; i++) {
+				int newK = p.getK() + i;
+				int newJ = p.getJ() + i;
+				if (m.getData(new Point(newK, newJ)).equals(Tile.VOID)) {
+					break;
+				}
+				if (newK < m.getkLength() && newK >= 0 && newJ < m.getjLength()
+						&& newJ >= 0) {
+					toReturn.add(new Point(newK, newJ));
+				}
+			}
+	   		for(int j = -1; j >= -5 - level;j--){
     			int newK = p.getK();
-    			int newJ = p.getJ() + k;
+    			int newJ = p.getJ() + j;
+    			if(m.getData(new Point(newK,newJ)).equals(Tile.VOID)){
+    				break;
+    			}
     			if(newK < m.getkLength() && newK >= 0 
     			    && newJ < m.getjLength() && newJ >= 0){
     				toReturn.add(new Point(newK,newJ));
     			}
-    		}
-    		for(int i = -(5 + level); i < 5 + level;i++){
-    			int newK = p.getK() + i;
-    			int newJ = p.getJ() + i;
-    			if(newK < m.getkLength() && newK >= 0 
-    			    && newJ < m.getjLength() && newJ >= 0){
-    				toReturn.add(new Point(newK,newJ));
-    			}
-    		}
+		}
+		for(int k = -1; k < -5 - level;k--){
+			int newK = p.getK();
+			int newJ = p.getJ() + k;
+			if(m.getData(new Point(newK,newJ)).equals(Tile.VOID)){
+				break;
+			}
+			if(newK < m.getkLength() && newK >= 0 
+			    && newJ < m.getjLength() && newJ >= 0){
+				toReturn.add(new Point(newK,newJ));
+			}
+		}
+		for(int i = -1; i >= -5 - level;i--){
+			int newK = p.getK() + i;
+			int newJ = p.getJ() + i;
+			if(m.getData(new Point(newK,newJ)).equals(Tile.VOID)){
+				break;
+			}
+			if(newK < m.getkLength() && newK >= 0 
+			    && newJ < m.getjLength() && newJ >= 0){
+				toReturn.add(new Point(newK,newJ));
+			}
+		}
     		break;
     	case DROID:
     		for(int j = -(3 + level); j < 3 + level;j++){
