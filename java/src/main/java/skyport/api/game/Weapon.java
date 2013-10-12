@@ -10,13 +10,13 @@ import java.util.List;
  */
 public class Weapon {
     private int level;
-    private WeaponType weapon;
+    private WeaponType name;
 
     /**
      * @return The name of the weapon. 
      */
     public WeaponType getName() {
-        return weapon;
+        return name;
     }
     
     /**
@@ -27,7 +27,7 @@ public class Weapon {
     public List<Point> inRange(Point p, Map m){
     	List<Point> toReturn = new ArrayList<Point>();
     	
-    	switch(weapon) {
+    	switch(name) {
     	case MORTAR:
     		for(int j = -(2 + level); j < 2 + level;j++){
         		for(int k = -(2 + level); k < 2 + level;k++){
