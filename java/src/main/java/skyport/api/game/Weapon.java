@@ -35,7 +35,7 @@ public class Weapon {
         			int newJ = p.getJ() + j;
         			if(newK < m.getkLength() && newK >= 0 
         			    && newJ < m.getjLength() && newJ >= 0){
-        				toReturn.add(new Point(newK,newJ));
+        				toReturn.add(new Point(newJ,newK));
         			}
         		}
     		}
@@ -46,7 +46,7 @@ public class Weapon {
         			int newJ = p.getJ() + j;
         			if(newK < m.getkLength() && newK >= 0 
         			    && newJ < m.getjLength() && newJ >= 0){
-        				toReturn.add(new Point(newK,newJ));
+        				toReturn.add(new Point(newJ,newK));
         			}
     		}
     		for(int k = -(5 + level); k < 5 + level;k++){
@@ -54,7 +54,7 @@ public class Weapon {
     			int newJ = p.getJ() + k;
     			if(newK < m.getkLength() && newK >= 0 
     			    && newJ < m.getjLength() && newJ >= 0){
-    				toReturn.add(new Point(newK,newJ));
+    				toReturn.add(new Point(newJ,newK));
     			}
     		}
     		for(int i = -(5 + level); i < 5 + level;i++){
@@ -62,7 +62,7 @@ public class Weapon {
     			int newJ = p.getJ() + i;
     			if(newK < m.getkLength() && newK >= 0 
     			    && newJ < m.getjLength() && newJ >= 0){
-    				toReturn.add(new Point(newK,newJ));
+    				toReturn.add(new Point(newJ,newK));
     			}
     		}
     		break;
@@ -73,7 +73,7 @@ public class Weapon {
         			int newJ = p.getJ() + j;
         			if(newK < m.getkLength() && newK >= 0 
         			    && newJ < m.getjLength() && newJ >= 0){
-        				toReturn.add(new Point(newK,newJ));
+        				toReturn.add(new Point(newJ,newK));
         			}
         		}
     		}
