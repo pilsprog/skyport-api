@@ -85,6 +85,38 @@ public class Weapon {
     }
 
     /**
+     * Returns the damage the weapon does.
+     * @return The damage of the weapon.
+     */
+    public int damage() {
+        switch(name) {
+        case MORTAR:
+            return level == 3 ? 25 : 20;
+        case LASER:
+            return 16 + 2*(level - 1);
+        case DROID:
+            return 20 + 2*level;
+        }
+        return 0;
+    }
+
+    /**
+     * Returns the maximum distance the weapon will hit something.
+     * @return The distance of the weapon.
+     */
+    public int distance() {
+        switch(name) {
+        case MORTAR:
+            return 1 + level;
+        case LASER:
+            return 4 + level;
+        case DROID:
+            return 2 + level;
+        }
+        return 0;
+    }
+
+    /**
      * @return The weapons level.
      */
     public int getLevel() {
