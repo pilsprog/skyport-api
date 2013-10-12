@@ -11,8 +11,8 @@ package skyport.api.game;
  *
  */
 public class Point {
-    private final int k;
     private final int j;
+    private final int k;
 
     
     /**
@@ -20,9 +20,9 @@ public class Point {
      * @param k The k-index of the point.
      * @param j The j-index of the point.
      */
-    public Point(int k, int j) {
-        this.k = k;
+    public Point(int j, int k) {
         this.j = j;
+        this.k = k;
     }
 
     /**
@@ -45,21 +45,21 @@ public class Point {
      * and the given point.
      */
     public int distance(Point point) {
-        int dk = Math.abs(k - point.k);
         int dj = Math.abs(j - point.j);
+        int dk = Math.abs(k - point.k);
 
         int distance = 0;
-        if (dk < dj / 2) {
-            distance = dj;
+        if (dj < dk / 2) {
+            distance = dk;
         } else {
-            distance = (int) (dj + dk - Math.floor(dj / 2.0));
+            distance = (int) (dk + dj - Math.floor(dk / 2.0));
         }
 
-        if (j % 2 == 0) {
-            if (dj % 2 == 1 && k > point.k) {
+        if (k % 2 == 0) {
+            if (dk % 2 == 1 && j > point.j) {
                 distance--;
             }
-        } else if (dj % 2 == 1 && k < point.k) {
+        } else if (dk % 2 == 1 && j < point.j) {
             distance--;
         }
 

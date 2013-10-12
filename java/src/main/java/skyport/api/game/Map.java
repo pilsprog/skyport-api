@@ -53,22 +53,24 @@ public class Map {
      * @return A list of neighbors of the given point. 
      */
     public List<Point> neighbors(Point p) {
-        List<Point> points = Arrays.asList(new Point(p.getK() + 1, p.getJ() + 1), new Point(p.getK() + 1, p.getJ()), new Point(p.getK(), p.getJ() + 1), new Point(p.getK() - 1, p.getJ() - 1), new Point(p.getK() - 1, p.getJ()), new Point(p.getK(), p.getJ() - 1));
+        List<Point> points = Arrays.asList(
+                    new Point(p.getJ() + 1, p.getK() + 1),
+                    new Point(p.getJ() + 1, p.getK()),
+                    new Point(p.getJ(), p.getK() + 1),
+                    new Point(p.getJ() - 1, p.getK() - 1),
+                    new Point(p.getJ() - 1, p.getK()),
+                    new Point(p.getJ(), p.getK() - 1));
 
         List<Point> neighbors = new ArrayList<Point>();
         for (Point n : points) {
-            int k = n.getK();
-            int j = n.getJ();
-            Tile tile = data.get(k).get(j);
+            Tile tile = getData(n);
             switch (tile) {
             case ROCK:
             case SPAWN:
             case VOID:
                 break;
             default:
-                if (k < kLength && j < jLength) {
-                    neighbors.add(n);
-                }
+                neighbors.add(n);
             }
         }
 
