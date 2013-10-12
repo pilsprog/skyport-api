@@ -100,4 +100,32 @@ public class Point implements Comparable<Point> {
 		}
 		return 0;
 	}
+    
+    public Direction direction(Point p) {
+        int i = (int)(Math.atan2(j-p.getJ(), k-p.getK())*180/Math.PI);
+        System.out.println(i);
+        switch(i) {
+        case -135:
+            return Direction.down;
+        case -90:
+            return Direction.leftDown;
+        case 180:
+            return Direction.rightDown;
+        case 45:
+            return Direction.up;
+        case 90:
+            return Direction.rightUp;
+        case 0:
+            return Direction.leftUp;
+        default: 
+            return null;
+        }
+
+    }
+    
+    
+    public String string() {
+        return j + ":" + k;
+        
+    }
 }

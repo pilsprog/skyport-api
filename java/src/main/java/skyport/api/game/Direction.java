@@ -8,6 +8,7 @@ import com.google.gson.annotations.SerializedName;
  * @author Bjarte
  */
 public enum Direction {
+    none,
     up,
     down,
     @SerializedName("right-up")

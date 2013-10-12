@@ -54,12 +54,12 @@ public class Map {
      */
     public List<Point> neighbors(Point p) {
         List<Point> points = Arrays.asList(
-                    new Point(p.getJ() + 1, p.getK() + 1),
-                    new Point(p.getJ() + 1, p.getK()),
-                    new Point(p.getJ(), p.getK() + 1),
-                    new Point(p.getJ() - 1, p.getK() - 1),
-                    new Point(p.getJ() - 1, p.getK()),
-                    new Point(p.getJ(), p.getK() - 1));
+                    new Point(p.getJ() + 1, p.getK() + 1), // down
+                    new Point(p.getJ() + 1, p.getK()), // left-down
+                    new Point(p.getJ(), p.getK() + 1), // right-down
+                    new Point(p.getJ() - 1, p.getK() - 1), // up
+                    new Point(p.getJ() - 1, p.getK()), // right-up
+                    new Point(p.getJ(), p.getK() - 1)); // left-up
 
         List<Point> neighbors = new ArrayList<Point>();
         for (Point n : points) {
