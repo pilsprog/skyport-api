@@ -29,8 +29,8 @@ public class Weapon {
     	
     	switch(name) {
     	case MORTAR:
-    		for(int j = -(2 + level); j < 2 + level;j++){
-        		for(int k = -(2 + level); k < 2 + level;k++){
+    		for(int j = -(2 + level); j <= 2 + level;j++){
+        		for(int k = -(2 + level); k <= 2 + level;k++){
         			int newK = p.getK() + k;
         			int newJ = p.getJ() + j;
         			if(newK < m.getkLength() && newK >= 0 
@@ -109,8 +109,8 @@ public class Weapon {
 		}
     		break;
     	case DROID:
-    		for(int j = -(3 + level); j < 3 + level;j++){
-        		for(int k = -(3 + level); k < 3 + level;k++){
+    		for(int j = -(3 + level); j <= 3 + level;j++){
+        		for(int k = -(3 + level); k <= 3 + level;k++){
         			int newK = p.getK() + k;
         			int newJ = p.getJ() + j;
         			if(newK < m.getkLength() && newK >= 0 
