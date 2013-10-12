@@ -41,8 +41,8 @@ public class Map {
 	 * @return The Tile at the given point.
 	 */
 	public Tile getData(Point p){
-    	if(p.getJ() < 0 || p.getJ() >= kLength ||
-    	   p.getK() < 0 || p.getK() >= jLength){
+    	if(p.getJ() < 0 || p.getJ() >= jLength ||
+    	   p.getK() < 0 || p.getK() >= kLength){
     		return Tile.VOID;
     	}
     	return data.get(p.getJ()).get(p.getK());
