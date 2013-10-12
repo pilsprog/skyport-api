@@ -10,8 +10,33 @@ package skyport.api.game;
  * @author Bjarte
  *
  */
-public class Point {
-    private final int j;
+public class Point implements Comparable<Point> {
+    @Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + j;
+		result = prime * result + k;
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Point other = (Point) obj;
+		if (j != other.j)
+			return false;
+		if (k != other.k)
+			return false;
+		return true;
+	}
+
+	private final int j;
     private final int k;
 
     
@@ -65,4 +90,14 @@ public class Point {
 
         return distance;
     }
+
+	@Override
+	public int compareTo(Point o) {
+		if(o.getJ() != j){
+			return o.getJ() - j;
+		} else if(o.getK() != k){
+			return o.getK() - k;
+		}
+		return 0;
+	}
 }
