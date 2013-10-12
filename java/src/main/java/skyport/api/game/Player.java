@@ -58,10 +58,10 @@ public class Player {
      * @return The players weapon of that name if
      *         it exists, otherwise null.
      */
-    public Weapon getWeapon(String string) {
-        if (this.primaryWeapon.getName().equals(string)) {
+    public Weapon getWeapon(WeaponType wt) {
+        if (this.primaryWeapon.getName().equals(wt)) {
             return this.primaryWeapon;
-        } else if (this.secondaryWeapon.getName().equals(string)) {
+        } else if (this.secondaryWeapon.getName().equals(wt)) {
             return this.secondaryWeapon;
         } else {
             return null;

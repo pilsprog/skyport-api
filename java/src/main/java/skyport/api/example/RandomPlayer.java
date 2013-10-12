@@ -10,6 +10,7 @@ import skyport.api.game.Direction;
 import skyport.api.game.GameState;
 import skyport.api.game.Player;
 import skyport.api.game.Point;
+import skyport.api.game.WeaponType;
 
 /**
  * 
@@ -115,7 +116,7 @@ public class RandomPlayer implements Runnable {
 			// Fire the mortar to a random tile
 			case "mortar":
 				Point point = me.getPosition();
-				level = me.getWeapon("mortar").getLevel();
+				level = me.getWeapon(WeaponType.MORTAR).getLevel();
 				int j = random.nextInt(level + 2) + point.getJ();
 				int k = random.nextInt(level + 2) + point.getK();
 				this.client.fireMortar(j, k);
@@ -123,7 +124,7 @@ public class RandomPlayer implements Runnable {
 
 			// Deploy a droid to move in random directions
 			case "droid":
-				level = me.getWeapon("droid").getLevel();
+				level = me.getWeapon(WeaponType.DROID).getLevel();
 				List<Direction> dirs = new ArrayList<Direction>();
 				for (int steps = 2 + level; steps > 0; steps--) {
 					dirs.add(this.randomDirection());
