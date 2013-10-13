@@ -103,7 +103,6 @@ public class Point implements Comparable<Point> {
     
     public Direction direction(Point p) {
         int i = (int)(Math.atan2(j-p.getJ(), k-p.getK())*180/Math.PI);
-        System.out.println(i);
         switch(i) {
         case -135:
             return Direction.down;

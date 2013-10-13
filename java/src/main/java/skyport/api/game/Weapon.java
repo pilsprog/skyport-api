@@ -29,16 +29,19 @@ public class Weapon {
     	
     	switch(name) {
     	case MORTAR:
-    		for(int j = -(2 + level); j <= 2 + level;j++){
-        		for(int k = -(2 + level); k <= 2 + level;k++){
+    		for(int j = -distance(); j <= distance();j++){
+        		for(int k = -distance(); k <= distance();k++){
         			int newK = p.getK() + k;
         			int newJ = p.getJ() + j;
+        			Point newPoint = new Point(newJ,newK);
         			if(newK < m.getkLength() && newK >= 0 
-        			    && newJ < m.getjLength() && newJ >= 0){
-        				toReturn.add(new Point(newJ,newK));
+        			    && newJ < m.getjLength() && newJ >= 0
+        			    && p.distance(newPoint) <= distance()){
+        				toReturn.add(newPoint);
         			}
         		}
     		}
+    		
     		break;
     	case LASER:
 			for (int j = 1; j <= distance(); j++) {
@@ -85,7 +88,7 @@ public class Weapon {
     				toReturn.add(new Point(newJ,newK));
     			}
 		}
-		for(int k = -1; k < -distance();k--){
+		for(int k = -1; k >= -distance();k--){
 			int newK = p.getK();
 			int newJ = p.getJ() + k;
 			if(m.getData(new Point(newK,newJ)).equals(Tile.ROCK)){
@@ -96,7 +99,7 @@ public class Weapon {
 				toReturn.add(new Point(newK,newJ));
 			}
 		}
-		for(int i = -1; i >= -5 - level;i--){
+		for(int i = -1; i >= -distance();i--){
 			int newK = p.getK() + i;
 			int newJ = p.getJ() + i;
 			if(m.getData(new Point(newK,newJ)).equals(Tile.ROCK)){
@@ -109,8 +112,8 @@ public class Weapon {
 		}
     		break;
     	case DROID:
-    		for(int j = -(3 + level); j <= 3 + level;j++){
-        		for(int k = -(3 + level); k <= 3 + level;k++){
+    		for(int j = -distance(); j <= distance();j++){
+        		for(int k = -distance(); k <= distance();k++){
         			int newK = p.getK() + k;
         			int newJ = p.getJ() + j;
         			if(newK < m.getkLength() && newK >= 0 
