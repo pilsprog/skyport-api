@@ -52,7 +52,7 @@ public class Map {
      * @param p A point on the map.
      * @return A list of neighbours of the given point. 
      */
-    public List<Point> neighbors(Point p) {
+    public List<Point> neighbours(Point p) {
         List<Point> points = Arrays.asList(
                     new Point(p.getJ() + 1, p.getK() + 1), // down
                     new Point(p.getJ() + 1, p.getK()), // left-down
