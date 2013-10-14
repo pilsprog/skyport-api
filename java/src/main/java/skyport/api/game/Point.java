@@ -89,11 +89,6 @@ public class Point implements Comparable<Point> {
         }
 
     }
-    
-    
-    public String string() {
-        return j + ":" + k;
-        
 
     @Override
     public boolean equals(Object obj) {
