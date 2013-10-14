@@ -26,7 +26,10 @@ import com.google.gson.GsonBuilder;
 public class SkyportClient {
     private SkyportConnection conn;
 
-    private Gson gson = new GsonBuilder().setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_DASHES).registerTypeAdapter(Point.class, new PointAdapter()).create();
+    private Gson gson = new GsonBuilder()
+        .setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_DASHES)
+        .registerTypeAdapter(Point.class, new PointAdapter())
+        .create();
 
     private String json;
 
