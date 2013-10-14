@@ -5,7 +5,10 @@ import java.util.List;
 import skyport.api.SkyportClient;
 import skyport.api.game.Direction;
 import skyport.api.game.GameState;
+import skyport.api.game.Map;
+import skyport.api.game.Player;
 import skyport.api.game.Point;
+import skyport.api.game.Weapon;
 import skyport.api.game.WeaponType;
 
 public class BestFirstPlayer implements Runnable {
@@ -26,14 +29,9 @@ public class BestFirstPlayer implements Runnable {
         // Creates the connection to the server
         this.client = new SkyportClient(host, port);
         this.client.connect();
-
         this.client.sendHandshake(this.name);
+        
         // Requests the chosen weapons
-        try {
-            Thread.sleep(1000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
         this.client.sendLoadout("mortar", "laser");
     }
 
@@ -42,29 +40,49 @@ public class BestFirstPlayer implements Runnable {
         GameState state;
         do {
             state = client.nextTurn(name);
-            Point me = state.getPlayers().get(0).getPosition();
+            Map map = state.getMap();
+            
+            Player me = state.getPlayers().get(0);
+            Point currentPosition = me.getPosition();
+            
+            Player enemy = state.getPlayers().get(1);
+            Point enemyPosition = enemy.getPosition();
+            
+            Weapon mortar = me.getWeapon(WeaponType.MORTAR);
+            Weapon laser = me.getWeapon(WeaponType.LASER);
+            
+            // We will do three actions unless we can fire.
             for (int i = 0; i < 3; i++) {
-                Point g = me;
-                Point he = state.getPlayers().get(1).getPosition();
-                if (state.getPlayers().get(0).getWeapon(WeaponType.MORTAR).inRange(g, state.getMap()).contains(he)) {
-                    client.fireMortar(he.getJ() - me.getJ(), he.getK() - me.getK());
+                // Is the laser in range? Fire laser and stop all actions.
+                if (laser.inRange(currentPosition, map).contains(enemyPosition)){
+                    client.fireLaser(currentPosition.direction(enemyPosition));
                     break;
-                } else if (state.getPlayers().get(0).getWeapon(WeaponType.LASER).inRange(g, state.getMap()).contains(he)) {
-                    client.fireLaser(g.direction(he));
+                // is the mortar in range? Fire mortar and break.
+                } else if (mortar.inRange(currentPosition, map).contains(enemy)) {
+                    client.fireMortar(
+                            // The mortar fires at a position relative to the 
+                            // player. Not at an absolute position.
+                            enemyPosition.getJ() - currentPosition.getJ(), 
+                            enemyPosition.getK() - currentPosition.getK());
                     break;
+                    // Else we are going to move.
                 } else {
-                    List<Point> points = state.getMap().neighbors(me);
-                    System.out.println("s:" + points.size());
+                    // Get all the neighbours of the currentPosition.
+                    List<Point> points = map.neighbours(currentPosition);
+                    Point nextPosition = points.get(0);
                     for (Point p : points) {
-                        if (p.distance(he) <= me.distance(he)) {
-                            me = p;
+                        // checking to see which of the neighbours are the closest to the enemy.
+                        if (p.distance(enemyPosition) < nextPosition.distance(enemyPosition)) {
+                            nextPosition = p;
                         }
                     }
-                    Direction dir = g.direction(me);
-                    if (dir == Direction.none) {
-                        client.move(g.direction(points.get(0)));
-                    } else {
+                    // get the direction the next position is in.
+                    Direction dir = currentPosition.direction(nextPosition);
+                    if (dir != Direction.none) {
                         client.move(dir);
+                        // Need to set the currentPosition to nextPosition as
+                        // the map is not updated between actions.
+                        currentPosition = nextPosition;
                     }
 
                 }
