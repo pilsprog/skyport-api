@@ -20,21 +20,6 @@ public class Point implements Comparable<Point> {
 		return result;
 	}
 
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		Point other = (Point) obj;
-		if (j != other.j)
-			return false;
-		if (k != other.k)
-			return false;
-		return true;
-	}
 
 	private final int j;
     private final int k;
@@ -126,5 +111,17 @@ public class Point implements Comparable<Point> {
     public String string() {
         return j + ":" + k;
         
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj instanceof Point) {
+            Point other = (Point) obj;
+            return j == other.j && k == other.k;
+        }
+        return false;
+    }
     }
 }
