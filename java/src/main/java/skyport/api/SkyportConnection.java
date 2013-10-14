@@ -5,6 +5,7 @@ import java.io.BufferedWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
+import java.net.InetAddress;
 import java.net.Socket;
 import java.net.UnknownHostException;
 
@@ -24,7 +25,8 @@ public class SkyportConnection {
     public boolean connect() {
         boolean connected = true;
         try {
-            socket = new Socket(host, port);
+            InetAddress a = InetAddress.getByName(host);
+            socket = new Socket(a, port);
         } catch (UnknownHostException e) {
             System.err.println("The host '" + host + ":" + port + "' does not exist.");
             connected = false;
