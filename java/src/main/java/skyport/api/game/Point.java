@@ -48,25 +48,10 @@ public class Point implements Comparable<Point> {
      *         given point.
      */
     public int distance(Point point) {
-        int dj = Math.abs(j - point.j);
-        int dk = Math.abs(k - point.k);
-
-        int distance = 0;
-        if (dj < dk / 2) {
-            distance = dk;
-        } else {
-            distance = (int) (dk + dj - Math.floor(dk / 2.0));
-        }
-
-        if (k % 2 == 0) {
-            if (dk % 2 == 1 && j > point.j) {
-                distance--;
-            }
-        } else if (dk % 2 == 1 && j < point.j) {
-            distance--;
-        }
-
-        return distance;
+       double updown = Math.abs(point.j - j);
+       double diagonal = Math.abs(point.k - k);
+       double leftright = Math.abs((point.j - point.k)*-1 - (j - k)*-1);
+       return (int)Math.max(updown, Math.max(diagonal, leftright));
     }
 
     public Direction direction(Point p) {
