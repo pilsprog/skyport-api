@@ -14,16 +14,16 @@ public class PointTest {
     
     @Test
     public void testZeroTwoDistance() {
-        assertEquals("failure - the distance between the points should be two.", 2, p.distance(new Point(0,2)));
+        assertEquals(2, p.distance(new Point(0,2)));
     }
     
     @Test
     public void voidTestZeroOneDistance() {
-        assertEquals("failure - distance should have been one.", 1, p.distance(new Point(0,1)));
+        assertEquals(1, p.distance(new Point(0,1)));
     }
     
     @Test 
     public void voidTestZeroThreeDistance() {
-        assertEquals("failure - distance should have been three.", 3, p.distance(new Point(0,3)));
+        assertEquals(3, p.distance(new Point(0,3)));
     }
 }
