@@ -1,8 +1,11 @@
 package skyport.api.game;
 
+import skyport.api.game.weapon.Weapon;
+
 /**
  * 
  * Represents a player of Skyport.
+ * 
  * @author Bjarte
  */
 public class Player {
@@ -18,9 +21,9 @@ public class Player {
      * The primary weapon of the player.
      */
     private Weapon secondaryWeapon;
-    
+
     /**
-     * The players position. 
+     * The players position.
      */
     private Point position;
     /**
@@ -51,21 +54,6 @@ public class Player {
      */
     public Weapon getSecondary() {
         return this.secondaryWeapon;
-    }
-
-    /**
-     * @param string A name of a weapon
-     * @return The players weapon of that name if
-     *         it exists, otherwise null.
-     */
-    public Weapon getWeapon(WeaponType wt) {
-        if (this.primaryWeapon.getName().equals(wt)) {
-            return this.primaryWeapon;
-        } else if (this.secondaryWeapon.getName().equals(wt)) {
-            return this.secondaryWeapon;
-        } else {
-            return null;
-        }
     }
 
     public Point getPosition() {
