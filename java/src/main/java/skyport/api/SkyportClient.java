@@ -82,7 +82,6 @@ public class SkyportClient {
         return status.getStatus();
     }
 
-    public void sendLoadout(String primary, String secondary) {
     /**
      * Sends the chosen loadout to the server.
      *
@@ -91,6 +90,7 @@ public class SkyportClient {
      * @param secondary
      *            The secondary weapon the bot is going to use.
      */
+    public void sendLoadout(Weapon primary, Weapon secondary) {
         LoadoutMessage loadout = new LoadoutMessage(primary, secondary);
         sendMessage(loadout);
     }
@@ -168,12 +168,12 @@ public class SkyportClient {
         sendMessage(mine);
     }
 
-    public void upgrade(String weapon) {
     /**
      * Sends a message; upgrade given weapon.
      *
      * @param weapon
      */
+    public void upgrade(Weapon weapon) {
         UpgradeMessage upgrade = new UpgradeMessage(weapon);
         sendMessage(upgrade);
     }
