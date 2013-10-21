@@ -41,7 +41,7 @@ public class SkyportConnection {
             InetAddress a = InetAddress.getByName(host);
             socket = new Socket(a, port);
         } catch (UnknownHostException e) {
-            System.err.println("The host '" + host + ":" + port + "' does not exist.");
+            System.err.println("The host '" + host + "' does not exist.");
             connected = false;
         } catch (IOException e) {
             System.err.println("Problem with connection.");
