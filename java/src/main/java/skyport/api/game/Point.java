@@ -54,6 +54,11 @@ public class Point implements Comparable<Point> {
        return (int)Math.max(updown, Math.max(diagonal, leftright));
     }
 
+    /**
+     * Calculates the direction to a point from the point.
+     * @param p The point to calculate the direction to.
+     * @return The direction the point is in.
+     */
     public Direction direction(Point p) {
         int i = (int) (Math.atan2(j - p.getJ(), k - p.getK()) * 180 / Math.PI);
         switch (i) {
