@@ -72,8 +72,9 @@ public class BestFirstPlayer implements Runnable {
                     List<Point> points = map.neighbours(currentPosition);
                     Point nextPosition = points.get(0);
                     for (Point p : points) {
-                        // checking to see which of the neighbours are the closest to the enemy.
-                        if (p.distance(enemyPosition) < nextPosition.distance(enemyPosition)) {
+                        // checking to see which of the neighbours are the
+                        // closest to the enemy.
+                        if (p.distance(enemyPosition) <= nextPosition.distance(enemyPosition)) {
                             nextPosition = p;
                         }
                     }
