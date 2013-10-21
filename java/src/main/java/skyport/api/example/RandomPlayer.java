@@ -10,7 +10,10 @@ import skyport.api.game.Direction;
 import skyport.api.game.GameState;
 import skyport.api.game.Player;
 import skyport.api.game.Point;
-import skyport.api.game.WeaponType;
+import skyport.api.game.weapon.Droid;
+import skyport.api.game.weapon.Laser;
+import skyport.api.game.weapon.Mortar;
+import skyport.api.game.weapon.Weapon;
 
 /**
  * 
@@ -29,6 +32,11 @@ public class RandomPlayer implements Runnable {
 	 * The name of the player.
 	 */
 	private String name;
+	
+	/**
+	 * The loadout of the player.
+	 */
+	private List<Weapon> loadout;
 
 	/**
 	 * A list of actions the player can perform.
@@ -55,14 +63,22 @@ public class RandomPlayer implements Runnable {
 		this.client.connect();
 		this.client.sendHandshake(this.name);
 
-		// Adds a random choice of two weapons
-		actions.addAll(Arrays.asList("laser", "mortar", "droid"));
-		actions.remove(random.nextInt(actions.size()));
-
+		// Randomly choose two weapons.
+		List<Weapon> weapons = Arrays.asList(new Droid(), new Laser(), new Mortar());
+		int i = random.nextInt(weapons.size());
+		Weapon primary = weapons.get(i);
+		weapons.remove(i);
+		i = random.nextInt(weapons.size());
+		Weapon secondary = weapons.get(i);
+		weapons = Arrays.asList(primary, secondary);
+		
 		// Requests the chosen weapons
-		this.client.sendLoadout(actions.get(0), actions.get(1));
+		this.client.sendLoadout(primary, secondary);
 
-		// Adds the remaining actions
+		// Add the actions we can choose from to a list so
+		// we can randomly choose from it.
+		actions.add(primary.getClass().getSimpleName().toLowerCase());
+		actions.add(secondary.getClass().getSimpleName().toLowerCase());
 		actions.add("mine");
 		actions.add("upgrade");
 	}
@@ -88,7 +104,6 @@ public class RandomPlayer implements Runnable {
 			Direction action3 = randomDirection();
 
 			Player me = state.getPlayers().get(0);
-			int level;
 
 			// Move in two random directions
 			this.client.move(action1);
@@ -97,14 +112,14 @@ public class RandomPlayer implements Runnable {
 			// Do a random action
 			switch (actions.get(random.nextInt(actions.size()))) {
 
-			// Lay down a mine
+			// mine the ore at the current location
 			case "mine":
 				this.client.mine();
 				break;
 
 			// Upgrade a random weapon
 			case "upgrade":
-				String weapon = actions.get(random.nextInt(2));
+				Weapon weapon = loadout.get(random.nextInt(2));
 				this.client.upgrade(weapon);
 				break;
 
@@ -116,17 +131,15 @@ public class RandomPlayer implements Runnable {
 			// Fire the mortar to a random tile
 			case "mortar":
 				Point point = me.getPosition();
-				level = me.getWeapon(WeaponType.MORTAR).getLevel();
-				int j = random.nextInt(level + 2) + point.getJ();
-				int k = random.nextInt(level + 2) + point.getK();
+				int j = random.nextInt(2) + point.getJ();
+				int k = random.nextInt(2) + point.getK();
 				this.client.fireMortar(j, k);
 				break;
 
 			// Deploy a droid to move in random directions
 			case "droid":
-				level = me.getWeapon(WeaponType.DROID).getLevel();
 				List<Direction> dirs = new ArrayList<Direction>();
-				for (int steps = 2 + level; steps > 0; steps--) {
+				for (int steps = 2; steps > 0; steps--) {
 					dirs.add(this.randomDirection());
 				}
 				this.client.fireDroid(dirs);
