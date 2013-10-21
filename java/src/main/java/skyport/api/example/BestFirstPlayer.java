@@ -8,8 +8,9 @@ import skyport.api.game.GameState;
 import skyport.api.game.Map;
 import skyport.api.game.Player;
 import skyport.api.game.Point;
-import skyport.api.game.Weapon;
-import skyport.api.game.WeaponType;
+import skyport.api.game.weapon.Laser;
+import skyport.api.game.weapon.Mortar;
+import skyport.api.game.weapon.Weapon;
 
 public class BestFirstPlayer implements Runnable {
 
@@ -30,9 +31,9 @@ public class BestFirstPlayer implements Runnable {
         this.client = new SkyportClient(host, port);
         this.client.connect();
         this.client.sendHandshake(this.name);
-        
+
         // Requests the chosen weapons
-        this.client.sendLoadout("mortar", "laser");
+        this.client.sendLoadout(new Mortar(), new Laser());
     }
 
     @Override
@@ -41,29 +42,29 @@ public class BestFirstPlayer implements Runnable {
         do {
             state = client.nextTurn(name);
             Map map = state.getMap();
-            
+
             Player me = state.getPlayers().get(0);
             Point currentPosition = me.getPosition();
-            
+
             Player enemy = state.getPlayers().get(1);
             Point enemyPosition = enemy.getPosition();
-            
-            Weapon mortar = me.getWeapon(WeaponType.MORTAR);
-            Weapon laser = me.getWeapon(WeaponType.LASER);
-            
+
+            Weapon mortar = me.getPrimary();
+            Weapon laser = me.getSecondary();
+
             // We will do three actions unless we can fire.
             for (int i = 0; i < 3; i++) {
-                // Is the laser in range? Fire laser and stop all actions.
-                if (laser.inRange(currentPosition, map).contains(enemyPosition)){
-                    client.fireLaser(currentPosition.direction(enemyPosition));
-                    break;
                 // is the mortar in range? Fire mortar and break.
-                } else if (mortar.inRange(currentPosition, map).contains(enemy)) {
+                if (mortar.inRange(currentPosition, map).contains(enemyPosition)) {
                     client.fireMortar(
-                            // The mortar fires at a position relative to the 
-                            // player. Not at an absolute position.
-                            enemyPosition.getJ() - currentPosition.getJ(), 
+                    // The mortar fires at a position relative to the
+                    // player. Not at an absolute position.
+                            enemyPosition.getJ() - currentPosition.getJ(),
                             enemyPosition.getK() - currentPosition.getK());
+                    break;
+                    // Is the laser in range? Fire laser and stop all actions.
+                } else if (laser.inRange(currentPosition, map).contains(enemyPosition)) {
+                    client.fireLaser(currentPosition.direction(enemyPosition));
                     break;
                     // Else we are going to move.
                 } else {
@@ -84,11 +85,8 @@ public class BestFirstPlayer implements Runnable {
                         // the map is not updated between actions.
                         currentPosition = nextPosition;
                     }
-
                 }
             }
-
         } while (state != null);
     }
-
 }
