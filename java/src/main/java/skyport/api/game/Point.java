@@ -48,15 +48,17 @@ public class Point implements Comparable<Point> {
      *         given point.
      */
     public int distance(Point point) {
-       double updown = Math.abs(point.j - j);
-       double diagonal = Math.abs(point.k - k);
-       double leftright = Math.abs((point.j - point.k)*-1 - (j - k)*-1);
-       return (int)Math.max(updown, Math.max(diagonal, leftright));
+        double updown = Math.abs(point.j - j);
+        double diagonal = Math.abs(point.k - k);
+        double leftright = Math.abs((point.j - point.k) * -1 - (j - k) * -1);
+        return (int) Math.max(updown, Math.max(diagonal, leftright));
     }
 
     /**
      * Calculates the direction to a point from the point.
-     * @param p The point to calculate the direction to.
+     * 
+     * @param p
+     *            The point to calculate the direction to.
      * @return The direction the point is in.
      */
     public Direction direction(Point p) {
@@ -75,7 +77,7 @@ public class Point implements Comparable<Point> {
         case 0:
             return Direction.leftUp;
         default:
-            return null;
+            return Direction.none;
         }
 
     }
