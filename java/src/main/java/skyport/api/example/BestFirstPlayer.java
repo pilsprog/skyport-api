@@ -80,12 +80,10 @@ public class BestFirstPlayer implements Runnable {
                     }
                     // get the direction the next position is in.
                     Direction dir = currentPosition.direction(nextPosition);
-                    if (dir != Direction.none) {
-                        client.move(dir);
-                        // Need to set the currentPosition to nextPosition as
-                        // the map is not updated between actions.
-                        currentPosition = nextPosition;
-                    }
+                    client.move(dir);
+                    // Need to set the currentPosition to nextPosition as
+                    // the map is not updated between actions.
+                    currentPosition = nextPosition;
                 }
             }
         } while (state != null);
