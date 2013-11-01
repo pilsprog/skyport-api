@@ -64,13 +64,12 @@ public class RandomPlayer implements Runnable {
 		this.client.sendHandshake(this.name);
 
 		// Randomly choose two weapons.
-		List<Weapon> weapons = Arrays.asList(new Droid(), new Laser(), new Mortar());
-		int i = random.nextInt(weapons.size());
-		Weapon primary = weapons.get(i);
-		weapons.remove(i);
-		i = random.nextInt(weapons.size());
-		Weapon secondary = weapons.get(i);
-		weapons = Arrays.asList(primary, secondary);
+		loadout = new ArrayList<>();
+		loadout.addAll(Arrays.asList(new Droid(), new Laser(), new Mortar()));
+		int i = random.nextInt(loadout.size());
+		loadout.remove(i);
+		Weapon primary = loadout.get(0);
+		Weapon secondary = loadout.get(1);
 		
 		// Requests the chosen weapons
 		this.client.sendLoadout(primary, secondary);
