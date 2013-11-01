@@ -86,7 +86,7 @@ public class RandomPlayer implements Runnable {
 	 * @return A random direction.
 	 */
 	private Direction randomDirection() {
-		int dir = random.nextInt(Direction.values().length);
+		int dir = random.nextInt(Direction.values().length-1);
 		return Direction.values()[dir];
 	}
 
