@@ -6,6 +6,7 @@ import skyport.api.game.Direction;
 import skyport.api.game.GameState;
 import skyport.api.game.Player;
 import skyport.api.game.Point;
+import skyport.api.game.Tile;
 import skyport.api.game.adapter.PointAdapter;
 import skyport.api.message.DroidAttackMessage;
 import skyport.api.message.ErrorMessage;
@@ -29,6 +30,8 @@ public class SkyportClient {
     private Gson gson = new GsonBuilder().setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_DASHES).registerTypeAdapter(Point.class, new PointAdapter()).create();
 
     private String json;
+    
+    private GameState state;
 
     public SkyportClient(String host, int port) {
         this.conn = new SkyportConnection(host, port);
@@ -84,7 +87,7 @@ public class SkyportClient {
                 continue;
             }
             if (message.getMessage().equals("gamestate")) {
-                GameState state = gson.fromJson(json, GameState.class);
+                state = gson.fromJson(json, GameState.class);
                 return state;
             }
         }
@@ -99,7 +102,7 @@ public class SkyportClient {
      */
     public GameState nextTurn(String name) {
         for (;;) {
-            GameState state = this.nextState();
+            this.nextState();
             Player player = state.getPlayers().get(0);
             if (player.getName().equals(name) && state.getTurn() > 0) {
                 return state;
@@ -109,7 +112,20 @@ public class SkyportClient {
 
     public void move(Direction dir) {
         MoveMessage move = new MoveMessage(dir);
+        Player thePlayer = state.getPlayers().get(0);
+        Point playerPosition = thePlayer.getPosition();
+        Point newPosition = playerPosition.adjacent(dir);
+        
+        if(newPosition == null)
+        	throw new IllegalArgumentException();
+        Tile data = state.getMap().getData(newPosition);
+        if(data.equals(Tile.VOID)
+        || data.equals(Tile.ROCK)
+        || data.equals(Tile.SPAWN))
+        	throw new IllegalArgumentException();
+        
         sendMessage(move);
+        thePlayer.setPosition(newPosition);
     }
 
     public void mine() {

@@ -83,16 +83,22 @@ public class RandomPlayer implements Runnable {
 			state = this.client.nextTurn(this.name);
 
 			// Generate directions for each action
-			Direction action1 = randomDirection();
-			Direction action2 = randomDirection();
-			Direction action3 = randomDirection();
 
 			Player me = state.getPlayers().get(0);
 			int level;
 
 			// Move in two random directions
-			this.client.move(action1);
-			this.client.move(action2);
+			boolean trying = true;
+			while(trying){
+				try{
+					Direction dir = randomDirection();
+					this.client.move(dir);
+					trying = false; //Whoo it worked!
+				}  catch(IllegalArgumentException e){
+					//Oups we couldn't actually move there
+					//Lets try again
+				}
+			}
 
 			// Do a random action
 			switch (actions.get(random.nextInt(actions.size()))) {
@@ -110,7 +116,8 @@ public class RandomPlayer implements Runnable {
 
 			// Fire the laser
 			case "laser":
-				this.client.fireLaser(action3);
+				Direction dir = randomDirection();
+				this.client.fireLaser(dir);
 				break;
 
 			// Fire the mortar to a random tile

@@ -2,6 +2,7 @@ package skyport.api.game;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+
 import java.util.List;
 
 /**
@@ -34,6 +35,10 @@ public class Map {
      */
 	public int getkLength() {
 		return kLength;
+	}
+	
+	public BFSIterator iterator(Point from){
+		return new BFSIterator(this, from);
 	}
 
 	/**

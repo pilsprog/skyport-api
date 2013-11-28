@@ -71,6 +71,10 @@ public class Player {
     public Point getPosition() {
         return position;
     }
+    
+    public void setPosition(Point p) {
+        this.position = p;
+    }
 
     public int getScore() {
         return score;

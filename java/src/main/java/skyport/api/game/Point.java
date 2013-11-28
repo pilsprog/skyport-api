@@ -127,4 +127,31 @@ public class Point implements Comparable<Point> {
         return j + ":" + k;
         
     }
+    
+    public Point minus(Point p){
+    	return new Point (this.j -p.j,this.k-p.k);
+    }
+
+	public Point adjacent(Direction dir) {
+		switch(dir){
+		case down:
+			return new Point(j+1,k+1);
+		case leftDown:
+			return new Point(j+1,k);
+		case leftUp:
+			return new Point(j,k-1);
+		case none:
+			return null;
+		case rightDown:
+			return new Point(j,k+1);
+		case rightUp:
+			return new Point(j-1,k);
+		case up:
+			return new Point(j-1,k-1);
+		default:
+			return null;
+		
+		}
+		
+	}
 }
