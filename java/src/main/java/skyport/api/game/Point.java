@@ -95,6 +95,11 @@ public class Point implements Comparable<Point> {
     }
 
     @Override
+	public String toString() {
+		return "Point [j=" + j + ", k=" + k + "]";
+	}
+
+	@Override
     public int compareTo(Point o) {
         if (o.getJ() != j) {
             return o.getJ() - j;

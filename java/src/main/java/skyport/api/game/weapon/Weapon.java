@@ -1,9 +1,8 @@
 package skyport.api.game.weapon;
 
-import java.util.List;
-
 import skyport.api.game.Map;
 import skyport.api.game.Point;
+import skyport.api.game.Tile;
 
 /**
  * 
@@ -13,15 +12,6 @@ import skyport.api.game.Point;
  */
 public abstract class Weapon {
     protected int level;
-
-    /**
-     * @param p
-     *            The point to shoot from.
-     * @param m
-     *            The map the weapon is fired from.
-     * @return The points the weapon can shoot at.
-     */
-    public abstract List<Point> inRange(Point p, Map m);
 
     /**
      * Returns the damage the weapon does.
@@ -36,6 +26,10 @@ public abstract class Weapon {
      * @return The distance of the weapon.
      */
     public abstract int distance();
+    
+    public abstract ShootActionIterator iterator(Point from, Map map);
+    
+    public abstract Tile getResource();
 
     /**
      * @return The weapons level.

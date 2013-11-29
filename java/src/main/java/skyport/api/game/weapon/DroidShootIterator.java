@@ -1,10 +1,15 @@
-package skyport.api.game;
+package skyport.api.game.weapon;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
 
 import skyport.api.SkyportClient;
+import skyport.api.game.Action;
+import skyport.api.game.BFSIterator;
+import skyport.api.game.Direction;
+import skyport.api.game.Map;
+import skyport.api.game.Point;
 
 public class DroidShootIterator extends BFSIterator implements ShootActionIterator {
 	

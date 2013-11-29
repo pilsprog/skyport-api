@@ -1,10 +1,15 @@
-package skyport.api.game;
+package skyport.api.game.weapon;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
 
 import skyport.api.SkyportClient;
+import skyport.api.game.Action;
+import skyport.api.game.Direction;
+import skyport.api.game.Map;
+import skyport.api.game.Point;
+import skyport.api.game.Tile;
 
 public class LazerShootIterator implements ShootActionIterator {
 	
@@ -124,8 +129,6 @@ public class LazerShootIterator implements ShootActionIterator {
 		
 		currPoint = new Point(from.getJ() + jOffset, from.getK() + kOffset);
 		currDirection = nextDirection;
-		
-		System.out.println("OMG TEH LAXZERS SHOOT HERE: " + currPoint.string());
 		
 		updateNext();
 		

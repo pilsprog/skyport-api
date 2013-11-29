@@ -67,7 +67,7 @@ public class BFSIterator implements Iterator<Point> {
 		current = queue.poll();
 		BFSPointData pointData = pathData.get(current);
 		
-		for(Point p : map.neighbors(current)){
+		for(Point p : map.neighbours(current)){
 			if(!pathData.containsKey(p) && !p.equals(current)){
 				pathData.put(p,new BFSPointData(current.direction(p),pointData.getLength()+1,current));
 				queue.add(p);

@@ -1,10 +1,8 @@
 package skyport.api.game.weapon;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import skyport.api.game.Map;
 import skyport.api.game.Point;
+import skyport.api.game.Tile;
 
 public class Droid extends Weapon {
     
@@ -24,18 +22,15 @@ public class Droid extends Weapon {
         return 20 + 2 * level;
     }
 
-    public List<Point> inRange(Point p, Map m) {
-        List<Point> inRange = new ArrayList<Point>();
-        for (int j = -distance(); j <= distance(); j++) {
-            for (int k = -distance(); k <= distance(); k++) {
-                int newK = p.getK() + k;
-                int newJ = p.getJ() + j;
-                if (newK < m.getkLength() && newK >= 0
-                        && newJ < m.getjLength() && newJ >= 0) {
-                    inRange.add(new Point(newJ, newK));
-                }
-            }
-        }
-        return inRange;
-    }
+	@Override
+	public ShootActionIterator iterator(Point from, Map map) {
+        return new DroidShootIterator(distance(), from, map);
+	}
+
+	@Override
+	public Tile getResource() {
+		return Tile.SCRAP;
+	}
+
+
 }

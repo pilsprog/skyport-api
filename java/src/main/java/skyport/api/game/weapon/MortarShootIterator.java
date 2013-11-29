@@ -1,9 +1,13 @@
-package skyport.api.game;
+package skyport.api.game.weapon;
 
 import java.util.List;
 import java.util.ArrayList;
 
 import skyport.api.SkyportClient;
+import skyport.api.game.Action;
+import skyport.api.game.Map;
+import skyport.api.game.Point;
+import skyport.api.game.Tile;
 
 public class MortarShootIterator implements ShootActionIterator {
 	
