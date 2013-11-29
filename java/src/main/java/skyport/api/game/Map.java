@@ -28,8 +28,8 @@ public class Map {
      * @return The number of j-index values on the map.
      */
     public int getjLength() {
-		return jLength;
-	}
+        return jLength;
+    }
     /**
      * @return The number of k-index values on the map.
      */
@@ -55,9 +55,9 @@ public class Map {
 
     /**
      * @param p A point on the map.
-     * @return A list of neighbors of the given point. 
+     * @return A list of neighbours of the given point. 
      */
-    public List<Point> neighbors(Point p) {
+    public List<Point> neighbours(Point p) {
         List<Point> points = Arrays.asList(
                     new Point(p.getJ() + 1, p.getK() + 1), // down
                     new Point(p.getJ() + 1, p.getK()), // left-down

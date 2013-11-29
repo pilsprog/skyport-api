@@ -17,7 +17,7 @@ public class PointAdapter extends TypeAdapter<Point> {
             writer.nullValue();
             return;
         }
-        String jk = point.getJ() + ", " + point.getK();
+        String jk = point.getJ() + "," + point.getK();
         writer.value(jk);
     }
 
@@ -31,7 +31,6 @@ public class PointAdapter extends TypeAdapter<Point> {
         String[] jk = reader.nextString().split(",");
         int j = Integer.parseInt(jk[0].trim());
         int k = Integer.parseInt(jk[1].trim());
-
         return new Point(j, k);
     }
 

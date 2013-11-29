@@ -1,10 +1,12 @@
 package skyport.api.message;
 
+import skyport.api.game.weapon.Weapon;
+
 public class UpgradeMessage extends ActionMessage {
     @SuppressWarnings("unused")
-    private String weapon;
+    private Weapon weapon;
 
-    public UpgradeMessage(String weapon) {
+    public UpgradeMessage(Weapon weapon) {
         this.type = "upgrade";
         this.weapon = weapon;
     }

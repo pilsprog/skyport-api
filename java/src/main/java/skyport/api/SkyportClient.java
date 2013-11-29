@@ -8,6 +8,8 @@ import skyport.api.game.Player;
 import skyport.api.game.Point;
 import skyport.api.game.Tile;
 import skyport.api.game.adapter.PointAdapter;
+import skyport.api.game.adapter.WeaponAdapter;
+import skyport.api.game.weapon.Weapon;
 import skyport.api.message.DroidAttackMessage;
 import skyport.api.message.ErrorMessage;
 import skyport.api.message.HandshakeMessage;
@@ -27,26 +29,56 @@ import com.google.gson.GsonBuilder;
 public class SkyportClient {
     private SkyportConnection conn;
 
-    private Gson gson = new GsonBuilder().setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_DASHES).registerTypeAdapter(Point.class, new PointAdapter()).create();
+    private Gson gson = new GsonBuilder()
+        .setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_DASHES)
+        .registerTypeAdapter(Point.class, new PointAdapter())
+        .registerTypeAdapter(Weapon.class, new WeaponAdapter())
+        .create();
 
     private String json;
     
     private GameState state;
 
+    /**
+     * Constructs a skyport client. Sets up the connection to the server.
+     *
+     * @param host
+     *            The hostname or ip-address of the server.
+     * @param port
+     *            The port number the server is listening to.
+     */
     public SkyportClient(String host, int port) {
         this.conn = new SkyportConnection(host, port);
     }
 
+    /**
+     * Starts the connection to the server.
+     */
     public void connect() {
         this.conn.connect();
     }
 
+    /**
+     * Sends the message to the server.
+     *
+     * @param message
+     *            A message to send to the server.
+     */
     public void sendMessage(Message message) {
         json = gson.toJson(message);
         System.out.println("Send: " + json);
         conn.send(json);
     }
 
+    /**
+     * Sends the handshake to the server.
+     *
+     * The server needs to recieve a handshake after the client connects.
+     *
+     * @param name
+     *            The name of your bot.
+     * @return Returns true if the connection was successful.
+     */
     public boolean sendHandshake(String name) {
         HandshakeMessage handshake = new HandshakeMessage(name);
         sendMessage(handshake);
@@ -56,11 +88,24 @@ public class SkyportClient {
         return status.getStatus();
     }
 
-    public void sendLoadout(String primary, String secondary) {
+    /**
+     * Sends the chosen loadout to the server.
+     *
+     * @param primary
+     *            The primary weapon the bot is going to use.
+     * @param secondary
+     *            The secondary weapon the bot is going to use.
+     */
+    public void sendLoadout(Weapon primary, Weapon secondary) {
         LoadoutMessage loadout = new LoadoutMessage(primary, secondary);
         sendMessage(loadout);
     }
 
+    /**
+     * Blocks until the next message is received from the server.
+     *
+     * @return The next message from the server.
+     */
     public Message nextMessage() {
         json = conn.read();
         System.out.println("Receive: " + json);
@@ -77,7 +122,7 @@ public class SkyportClient {
     /**
      * Gives the turn to the next player. Ignores all messages until the next
      * game state is received.
-     * 
+     *
      * @return The current game state.
      */
     public GameState nextState() {
@@ -95,7 +140,7 @@ public class SkyportClient {
 
     /**
      * Ignores all messages until it is the named players next turn again.
-     * 
+     *
      * @param name
      *            The name of the player to get the next turn for.
      * @return The current game state.
@@ -110,6 +155,12 @@ public class SkyportClient {
         }
     }
 
+    /**
+     * Sends the direction you want the bot to move in next.
+     *
+     * @param dir
+     *            The direction to move in.
+     */
     public void move(Direction dir) {
         MoveMessage move = new MoveMessage(dir);
         Player thePlayer = state.getPlayers().get(0);
@@ -128,26 +179,58 @@ public class SkyportClient {
         thePlayer.setPosition(newPosition);
     }
 
+    /**
+     * Sends a message; dig for ore at the current location.
+     */
     public void mine() {
         MineMessage mine = new MineMessage();
         sendMessage(mine);
     }
 
-    public void upgrade(String weapon) {
+    /**
+     * Sends a message; upgrade given weapon.
+     *
+     * @param weapon
+     */
+    public void upgrade(Weapon weapon) {
         UpgradeMessage upgrade = new UpgradeMessage(weapon);
         sendMessage(upgrade);
     }
 
+    /**
+     * Send a message; fire laser in the given direction.
+     *
+     * If the bot does not have a laser the message will be interpreted as
+     * invalid and the bot will lose points.
+     *
+     * @param dir
+     */
     public void fireLaser(Direction dir) {
         LaserAttackMessage attack = new LaserAttackMessage(dir);
         sendMessage(attack);
     }
 
+    /**
+     * Send a message; fire mortar at a relative point.
+     *
+     * If the bot does not have a mortar or it can not hit the point the message
+     * will be interpreted as invalid and the bot will lose points.
+     *
+     * @param dir
+     */
     public void fireMortar(int j, int k) {
         MortarAttackMessage attack = new MortarAttackMessage(j, k);
         sendMessage(attack);
     }
 
+    /**
+     * Send a message; fire droid in direction.
+     *
+     * If the bot does not have a droid or it can not hit the point the message
+     * will be interpreted as invalid and the bot will lose points.
+     *
+     * @param directions
+     */
     public void fireDroid(List<Direction> directions) {
         DroidAttackMessage attack = new DroidAttackMessage(directions);
         sendMessage(attack);

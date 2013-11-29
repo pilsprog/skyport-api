@@ -5,6 +5,7 @@ import java.io.BufferedWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
+import java.net.InetAddress;
 import java.net.Socket;
 import java.net.UnknownHostException;
 
@@ -16,17 +17,31 @@ public class SkyportConnection {
     private BufferedWriter out;
     private BufferedReader in;
 
+    /**
+     * Sets up the connection to the server.
+     * 
+     * @param host The hostname or ip-address of the server.
+     * @param port The port name the server is listening to.
+     */
     public SkyportConnection(String host, int port) {
         this.host = host;
         this.port = port;
     }
 
+    /**
+     * Connects to the server.
+     * 
+     * Sets up the writer and reader for the socket.
+     * 
+     * @return true if the connection was successful.
+     */
     public boolean connect() {
         boolean connected = true;
         try {
-            socket = new Socket(host, port);
+            InetAddress a = InetAddress.getByName(host);
+            socket = new Socket(a, port);
         } catch (UnknownHostException e) {
-            System.err.println("The host '" + host + ":" + port + "' does not exist.");
+            System.err.println("The host '" + host + "' does not exist.");
             connected = false;
         } catch (IOException e) {
             System.err.println("Problem with connection.");
@@ -50,6 +65,11 @@ public class SkyportConnection {
         return connected;
     }
 
+    /**
+     * Sends the json encoded string to the server.
+     * @param json json encoded as a string.
+     * @return returns true if the send was successful.
+     */
     public boolean send(String json) {
         boolean sent = true;
         try {
@@ -63,6 +83,10 @@ public class SkyportConnection {
         return sent;
     }
 
+    /** 
+     * Blocks on read from the server.
+     * @return Returns the next json encoded string.
+     */
     public String read() {
         String json = null;
         try {
@@ -73,6 +97,9 @@ public class SkyportConnection {
         return json;
     }
 
+    /**
+     * Closes the connection to the server.
+     */
     public void close() {
         try {
             this.socket.close();

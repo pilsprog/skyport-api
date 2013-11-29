@@ -1,12 +1,14 @@
 package skyport.api.message;
 
+import skyport.api.game.weapon.Weapon;
+
 public class LoadoutMessage extends Message {
     @SuppressWarnings("unused")
-    private String primaryWeapon;
+    private Weapon primaryWeapon;
     @SuppressWarnings("unused")
-    private String secondaryWeapon;
+    private Weapon secondaryWeapon;
 
-    public LoadoutMessage(String primary, String secondary) {
+    public LoadoutMessage(Weapon primary, Weapon secondary) {
         this.message = "loadout";
         this.primaryWeapon = primary;
         this.secondaryWeapon = secondary;
