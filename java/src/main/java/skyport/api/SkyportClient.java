@@ -10,14 +10,14 @@ import skyport.api.game.Tile;
 import skyport.api.game.adapter.PointAdapter;
 import skyport.api.game.adapter.WeaponAdapter;
 import skyport.api.game.weapon.Weapon;
-import skyport.api.message.DroidAttackMessage;
+import skyport.api.message.DroidActionMessage;
 import skyport.api.message.ErrorMessage;
 import skyport.api.message.HandshakeMessage;
-import skyport.api.message.LaserAttackMessage;
+import skyport.api.message.LaserActionMessage;
 import skyport.api.message.LoadoutMessage;
 import skyport.api.message.Message;
-import skyport.api.message.MineMessage;
-import skyport.api.message.MortarAttackMessage;
+import skyport.api.message.MineActionMessage;
+import skyport.api.message.MortarActionMessage;
 import skyport.api.message.MoveMessage;
 import skyport.api.message.StatusMessage;
 import skyport.api.message.UpgradeMessage;
@@ -183,7 +183,7 @@ public class SkyportClient {
      * Sends a message; dig for ore at the current location.
      */
     public void mine() {
-        MineMessage mine = new MineMessage();
+        MineActionMessage mine = new MineActionMessage();
         sendMessage(mine);
     }
 
@@ -206,7 +206,7 @@ public class SkyportClient {
      * @param dir
      */
     public void fireLaser(Direction dir) {
-        LaserAttackMessage attack = new LaserAttackMessage(dir);
+        LaserActionMessage attack = new LaserActionMessage(dir);
         sendMessage(attack);
     }
 
@@ -219,7 +219,7 @@ public class SkyportClient {
      * @param dir
      */
     public void fireMortar(int j, int k) {
-        MortarAttackMessage attack = new MortarAttackMessage(j, k);
+        MortarActionMessage attack = new MortarActionMessage(j, k);
         sendMessage(attack);
     }
 
@@ -232,7 +232,7 @@ public class SkyportClient {
      * @param directions
      */
     public void fireDroid(List<Direction> directions) {
-        DroidAttackMessage attack = new DroidAttackMessage(directions);
+        DroidActionMessage attack = new DroidActionMessage(directions);
         sendMessage(attack);
     }
 }

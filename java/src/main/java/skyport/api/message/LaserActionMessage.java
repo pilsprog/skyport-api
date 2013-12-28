@@ -2,11 +2,11 @@ package skyport.api.message;
 
 import skyport.api.game.Direction;
 
-public class LaserAttackMessage extends ActionMessage {
+public class LaserActionMessage extends ActionMessage {
     @SuppressWarnings("unused")
     private Direction direction;
 
-    public LaserAttackMessage(Direction direction) {
+    public LaserActionMessage(Direction direction) {
         this.type = "laser";
         this.direction = direction;
     }
