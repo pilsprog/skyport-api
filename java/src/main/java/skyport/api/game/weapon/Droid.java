@@ -14,10 +14,12 @@ public class Droid extends Weapon {
         this.level = 1;
     }
 
+    @Override
     public int distance() {
         return 2 + level;
     }
 
+    @Override
     public int damage() {
         return 20 + 2 * level;
     }

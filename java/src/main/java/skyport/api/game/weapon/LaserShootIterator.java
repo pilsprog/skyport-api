@@ -48,8 +48,9 @@ public class LaserShootIterator implements ShootActionIterator {
             newDirection();
             this.jOffset = 0;
             this.kOffset = 0;
-            if (!hasNext())
+            if (!hasNext()) {
                 return;
+            }
             updateNext();
         }
     }
@@ -121,8 +122,9 @@ public class LaserShootIterator implements ShootActionIterator {
 
     @Override
     public Point next() {
-        if (!hasNext())
+        if (!hasNext()) {
             throw new NoSuchElementException();
+        }
 
         currPoint = new Point(from.getJ() + jOffset, from.getK() + kOffset);
         currDirection = nextDirection;

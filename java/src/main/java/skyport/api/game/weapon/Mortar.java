@@ -14,10 +14,12 @@ public class Mortar extends Weapon {
         this.level = 1;
     }
 
+    @Override
     public int distance() {
         return 1 + level;
     }
 
+    @Override
     public int damage() {
         return level == 3 ? 25 : 20;
     }

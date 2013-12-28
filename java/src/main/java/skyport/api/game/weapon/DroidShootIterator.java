@@ -27,8 +27,9 @@ public class DroidShootIterator extends BFSIterator implements ShootActionIterat
 
     @Override
     public Point next() {
-        if (!hasNext())
+        if (!hasNext()) {
             throw new NoSuchElementException();
+        }
         return super.next();
     }
 

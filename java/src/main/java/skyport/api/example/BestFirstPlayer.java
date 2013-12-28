@@ -64,8 +64,9 @@ public class BestFirstPlayer implements Runnable {
                     }
                 }
 
-                if (didShoot)
+                if (didShoot) {
                     break;
+                }
 
                 // Try the same thing with the laser!
                 didShoot = false;
@@ -80,8 +81,9 @@ public class BestFirstPlayer implements Runnable {
                     }
                 }
 
-                if (didShoot)
+                if (didShoot) {
                     break;
+                }
 
                 // Get all the neighbours of the currentPosition.
                 Point currentPosition = me.getPosition();

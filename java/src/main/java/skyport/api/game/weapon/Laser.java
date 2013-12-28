@@ -14,10 +14,12 @@ public class Laser extends Weapon {
         this.level = 1;
     }
 
+    @Override
     public int distance() {
         return 4 + level;
     }
 
+    @Override
     public int damage() {
         return 16 + 2 * (level - 1);
     }
