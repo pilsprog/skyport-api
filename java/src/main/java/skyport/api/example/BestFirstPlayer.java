@@ -10,9 +10,7 @@ import skyport.api.game.Player;
 import skyport.api.game.Point;
 import skyport.api.game.weapon.Laser;
 import skyport.api.game.weapon.Mortar;
-import skyport.api.game.weapon.MortarShootIterator;
 import skyport.api.game.weapon.ShootActionIterator;
-import skyport.api.game.weapon.Weapon;
 
 public class BestFirstPlayer implements Runnable {
 
