@@ -51,57 +51,58 @@ public class BestFirstPlayer implements Runnable {
             // We will do three actions unless we can fire.
             for (int i = 0; i < 3; i++) {
                 // is the mortar in range? Fire mortar and break.
-            	
-            	boolean didShoot = false;
-            	ShootActionIterator it = me.getPrimary().iterator(me.getPosition(), map);
-            	while(it.hasNext()){
-            		Point shootAt = it.next();
-            		if(shootAt.equals(enemyPosition)){
-                		System.out.println("BESTFIRST WILL SHOOT YOU DOWN!");
-            			it.getCurrentAction().perform(client);
-            			didShoot = true;
-            			break;
-            		}
-            	}
-            	
-            	if(didShoot) break;
-            	
-            	//Try the same thing with the laser!
-            	didShoot = false;
-            	it = me.getSecondary().iterator(me.getPosition(), map);
-            	while(it.hasNext()){
-            		Point shootAt = it.next();
-            		if(shootAt.equals(enemyPosition)){
-                		System.out.println("BESTFIRST WILL SHOOT YOU DOWN!");
-            			it.getCurrentAction().perform(client);
-            			didShoot = true;
-            			break;
-            		}
-            	}
-            	
-            	if(didShoot) break;
-            	
-				// Get all the neighbours of the currentPosition.
-                Point currentPosition = me.getPosition();
-				List<Point> points = map.neighbours(currentPosition);
-				Point nextPosition = points.get(0);
-				for (Point p : points) {
-					// checking to see which of the neighbours are the
-					// closest to the enemy.
-					if (p.distance(enemyPosition) <= nextPosition
-							.distance(enemyPosition)) {
-						nextPosition = p;
-					}
-				}
-				// get the direction the next position is in.
-				Direction dir = currentPosition.direction(nextPosition);
-        		System.out.println("MOVE ALONG, NOTHING TO SEE HERE!");
-            	System.out.println(currentPosition + ":" + nextPosition + "=" + dir);
-				client.move(dir);
-				// Need to set the currentPosition to nextPosition as
-				// the map is not updated between actions.
 
-			}
-		} while (state != null);
-	}
+                boolean didShoot = false;
+                ShootActionIterator it = me.getPrimary().iterator(me.getPosition(), map);
+                while (it.hasNext()) {
+                    Point shootAt = it.next();
+                    if (shootAt.equals(enemyPosition)) {
+                        System.out.println("BESTFIRST WILL SHOOT YOU DOWN!");
+                        it.getCurrentAction().perform(client);
+                        didShoot = true;
+                        break;
+                    }
+                }
+
+                if (didShoot)
+                    break;
+
+                // Try the same thing with the laser!
+                didShoot = false;
+                it = me.getSecondary().iterator(me.getPosition(), map);
+                while (it.hasNext()) {
+                    Point shootAt = it.next();
+                    if (shootAt.equals(enemyPosition)) {
+                        System.out.println("BESTFIRST WILL SHOOT YOU DOWN!");
+                        it.getCurrentAction().perform(client);
+                        didShoot = true;
+                        break;
+                    }
+                }
+
+                if (didShoot)
+                    break;
+
+                // Get all the neighbours of the currentPosition.
+                Point currentPosition = me.getPosition();
+                List<Point> points = map.neighbours(currentPosition);
+                Point nextPosition = points.get(0);
+                for (Point p : points) {
+                    // checking to see which of the neighbours are the
+                    // closest to the enemy.
+                    if (p.distance(enemyPosition) <= nextPosition.distance(enemyPosition)) {
+                        nextPosition = p;
+                    }
+                }
+                // get the direction the next position is in.
+                Direction dir = currentPosition.direction(nextPosition);
+                System.out.println("MOVE ALONG, NOTHING TO SEE HERE!");
+                System.out.println(currentPosition + ":" + nextPosition + "=" + dir);
+                client.move(dir);
+                // Need to set the currentPosition to nextPosition as
+                // the map is not updated between actions.
+
+            }
+        } while (state != null);
+    }
 }

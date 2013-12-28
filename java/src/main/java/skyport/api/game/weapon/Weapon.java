@@ -26,9 +26,9 @@ public abstract class Weapon {
      * @return The distance of the weapon.
      */
     public abstract int distance();
-    
+
     public abstract ShootActionIterator iterator(Point from, Map map);
-    
+
     public abstract Tile getResource();
 
     /**

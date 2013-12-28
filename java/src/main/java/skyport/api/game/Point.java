@@ -95,11 +95,11 @@ public class Point implements Comparable<Point> {
     }
 
     @Override
-	public String toString() {
-		return "Point [j=" + j + ", k=" + k + "]";
-	}
+    public String toString() {
+        return "Point [j=" + j + ", k=" + k + "]";
+    }
 
-	@Override
+    @Override
     public int compareTo(Point o) {
         if (o.getJ() != j) {
             return o.getJ() - j;
@@ -117,31 +117,31 @@ public class Point implements Comparable<Point> {
         result = prime * result + k;
         return result;
     }
-    
-    public Point minus(Point p){
-    	return new Point (this.j -p.j,this.k-p.k);
+
+    public Point minus(Point p) {
+        return new Point(this.j - p.j, this.k - p.k);
     }
 
-	public Point adjacent(Direction dir) {
-		switch(dir){
-		case down:
-			return new Point(j+1,k+1);
-		case leftDown:
-			return new Point(j+1,k);
-		case leftUp:
-			return new Point(j,k-1);
-		case none:
-			return null;
-		case rightDown:
-			return new Point(j,k+1);
-		case rightUp:
-			return new Point(j-1,k);
-		case up:
-			return new Point(j-1,k-1);
-		default:
-			return null;
-		
-		}
-		
-	}
+    public Point adjacent(Direction dir) {
+        switch (dir) {
+        case down:
+            return new Point(j + 1, k + 1);
+        case leftDown:
+            return new Point(j + 1, k);
+        case leftUp:
+            return new Point(j, k - 1);
+        case none:
+            return null;
+        case rightDown:
+            return new Point(j, k + 1);
+        case rightUp:
+            return new Point(j - 1, k);
+        case up:
+            return new Point(j - 1, k - 1);
+        default:
+            return null;
+
+        }
+
+    }
 }

@@ -15,7 +15,7 @@ public class WeaponAdapter extends TypeAdapter<Weapon> {
 
     @Override
     public void write(JsonWriter out, Weapon value) throws IOException {
-        if(value == null) {
+        if (value == null) {
             out.nullValue();
             return;
         }
@@ -26,11 +26,11 @@ public class WeaponAdapter extends TypeAdapter<Weapon> {
     public Weapon read(JsonReader reader) throws IOException {
         String weapon = null;
         Integer level = null;
-        
+
         reader.beginObject();
-        while(reader.hasNext()) {
+        while (reader.hasNext()) {
             String name = reader.nextName();
-            switch(name) {
+            switch (name) {
             case "name":
                 weapon = reader.nextString();
                 break;
@@ -40,9 +40,9 @@ public class WeaponAdapter extends TypeAdapter<Weapon> {
             }
         }
         reader.endObject();
-        
+
         Weapon w = null;
-        switch(weapon) {
+        switch (weapon) {
         case "mortar":
             w = new Mortar(level);
             break;

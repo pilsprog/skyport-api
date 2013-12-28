@@ -7,8 +7,9 @@ import skyport.api.game.Action;
 import skyport.api.game.Point;
 
 public interface ShootActionIterator extends Iterator<Point> {
-	
-	public Action getCurrentAction();
-	public List<Point> goingToHit();
+
+    public Action getCurrentAction();
+
+    public List<Point> goingToHit();
 
 }

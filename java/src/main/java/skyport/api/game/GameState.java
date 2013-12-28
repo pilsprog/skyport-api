@@ -5,20 +5,21 @@ import java.util.List;
 /**
  * 
  * The state of the game at a given turn.
+ * 
  * @author Bjarte
  */
 public class GameState {
-	
+
     /**
-     * The turn number. 
+     * The turn number.
      */
     private int turn;
-    
+
     /**
-     * The list of players 
+     * The list of players
      */
     private List<Player> players;
-  
+
     /**
      * The game map.
      */
@@ -39,8 +40,8 @@ public class GameState {
     }
 
     /**
-     * @return A list of players left in the game,
-     *        the first player has the turn.
+     * @return A list of players left in the game, the first player has the
+     *         turn.
      */
     public List<Player> getPlayers() {
         return players;

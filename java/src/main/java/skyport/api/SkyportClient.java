@@ -36,12 +36,12 @@ public class SkyportClient {
         .create();
 
     private String json;
-    
+
     private GameState state;
 
     /**
      * Constructs a skyport client. Sets up the connection to the server.
-     *
+     * 
      * @param host
      *            The hostname or ip-address of the server.
      * @param port
@@ -60,7 +60,7 @@ public class SkyportClient {
 
     /**
      * Sends the message to the server.
-     *
+     * 
      * @param message
      *            A message to send to the server.
      */
@@ -72,9 +72,9 @@ public class SkyportClient {
 
     /**
      * Sends the handshake to the server.
-     *
+     * 
      * The server needs to recieve a handshake after the client connects.
-     *
+     * 
      * @param name
      *            The name of your bot.
      * @return Returns true if the connection was successful.
@@ -90,7 +90,7 @@ public class SkyportClient {
 
     /**
      * Sends the chosen loadout to the server.
-     *
+     * 
      * @param primary
      *            The primary weapon the bot is going to use.
      * @param secondary
@@ -103,7 +103,7 @@ public class SkyportClient {
 
     /**
      * Blocks until the next message is received from the server.
-     *
+     * 
      * @return The next message from the server.
      */
     public Message nextMessage() {
@@ -122,7 +122,7 @@ public class SkyportClient {
     /**
      * Gives the turn to the next player. Ignores all messages until the next
      * game state is received.
-     *
+     * 
      * @return The current game state.
      */
     public GameState nextState() {
@@ -140,7 +140,7 @@ public class SkyportClient {
 
     /**
      * Ignores all messages until it is the named players next turn again.
-     *
+     * 
      * @param name
      *            The name of the player to get the next turn for.
      * @return The current game state.
@@ -157,7 +157,7 @@ public class SkyportClient {
 
     /**
      * Sends the direction you want the bot to move in next.
-     *
+     * 
      * @param dir
      *            The direction to move in.
      */
@@ -166,15 +166,13 @@ public class SkyportClient {
         Player thePlayer = state.getPlayers().get(0);
         Point playerPosition = thePlayer.getPosition();
         Point newPosition = playerPosition.adjacent(dir);
-        
-        if(newPosition == null)
-        	throw new IllegalArgumentException();
+
+        if (newPosition == null)
+            throw new IllegalArgumentException();
         Tile data = state.getMap().getData(newPosition);
-        if(data.equals(Tile.VOID)
-        || data.equals(Tile.ROCK)
-        || data.equals(Tile.SPAWN))
-        	throw new IllegalArgumentException();
-        
+        if (data.equals(Tile.VOID) || data.equals(Tile.ROCK) || data.equals(Tile.SPAWN))
+            throw new IllegalArgumentException();
+
         sendMessage(move);
         thePlayer.setPosition(newPosition);
     }
@@ -189,7 +187,7 @@ public class SkyportClient {
 
     /**
      * Sends a message; upgrade given weapon.
-     *
+     * 
      * @param weapon
      */
     public void upgrade(Weapon weapon) {
@@ -199,10 +197,10 @@ public class SkyportClient {
 
     /**
      * Send a message; fire laser in the given direction.
-     *
+     * 
      * If the bot does not have a laser the message will be interpreted as
      * invalid and the bot will lose points.
-     *
+     * 
      * @param dir
      */
     public void fireLaser(Direction dir) {
@@ -212,10 +210,10 @@ public class SkyportClient {
 
     /**
      * Send a message; fire mortar at a relative point.
-     *
+     * 
      * If the bot does not have a mortar or it can not hit the point the message
      * will be interpreted as invalid and the bot will lose points.
-     *
+     * 
      * @param dir
      */
     public void fireMortar(int j, int k) {
@@ -225,10 +223,10 @@ public class SkyportClient {
 
     /**
      * Send a message; fire droid in direction.
-     *
+     * 
      * If the bot does not have a droid or it can not hit the point the message
      * will be interpreted as invalid and the bot will lose points.
-     *
+     * 
      * @param directions
      */
     public void fireDroid(List<Direction> directions) {

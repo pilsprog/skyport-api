@@ -59,7 +59,7 @@ public class Player {
     public Point getPosition() {
         return position;
     }
-    
+
     public void setPosition(Point p) {
         this.position = p;
     }

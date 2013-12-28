@@ -9,7 +9,7 @@ public class Mortar extends Weapon {
     public Mortar(int level) {
         this.level = level;
     }
-    
+
     public Mortar() {
         this.level = 1;
     }
@@ -17,19 +17,18 @@ public class Mortar extends Weapon {
     public int distance() {
         return 1 + level;
     }
-    
+
     public int damage() {
         return level == 3 ? 25 : 20;
     }
 
-
-	@Override
-	public ShootActionIterator iterator(Point from, Map map) {
+    @Override
+    public ShootActionIterator iterator(Point from, Map map) {
         return new MortarShootIterator(distance(), from, map);
-	}
+    }
 
-	@Override
-	public Tile getResource() {
-		return Tile.EXPLOSIUM;
-	}
+    @Override
+    public Tile getResource() {
+        return Tile.EXPLOSIUM;
+    }
 }

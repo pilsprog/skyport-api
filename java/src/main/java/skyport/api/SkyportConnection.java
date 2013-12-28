@@ -20,8 +20,10 @@ public class SkyportConnection {
     /**
      * Sets up the connection to the server.
      * 
-     * @param host The hostname or ip-address of the server.
-     * @param port The port name the server is listening to.
+     * @param host
+     *            The hostname or ip-address of the server.
+     * @param port
+     *            The port name the server is listening to.
      */
     public SkyportConnection(String host, int port) {
         this.host = host;
@@ -67,7 +69,9 @@ public class SkyportConnection {
 
     /**
      * Sends the json encoded string to the server.
-     * @param json json encoded as a string.
+     * 
+     * @param json
+     *            json encoded as a string.
      * @return returns true if the send was successful.
      */
     public boolean send(String json) {
@@ -83,8 +87,9 @@ public class SkyportConnection {
         return sent;
     }
 
-    /** 
+    /**
      * Blocks on read from the server.
+     * 
      * @return Returns the next json encoded string.
      */
     public String read() {
