@@ -27,7 +27,7 @@ public class Laser extends Weapon {
 
 	@Override
 	public ShootActionIterator iterator(Point from, Map map) {
-        return new LazerShootIterator(distance(), from, map);
+        return new LaserShootIterator(distance(), from, map);
 	}
 
 	@Override

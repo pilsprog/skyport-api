@@ -11,7 +11,7 @@ import skyport.api.game.Map;
 import skyport.api.game.Point;
 import skyport.api.game.Tile;
 
-public class LazerShootIterator implements ShootActionIterator {
+public class LaserShootIterator implements ShootActionIterator {
 	
 	private int maxDistance;
 	private Point from;
@@ -25,7 +25,7 @@ public class LazerShootIterator implements ShootActionIterator {
 	
 	
 
-	public LazerShootIterator(int maxDistance, Point from, Map map) {
+	public LaserShootIterator(int maxDistance, Point from, Map map) {
 		super();
 		this.maxDistance = maxDistance;
 		this.from = from;
