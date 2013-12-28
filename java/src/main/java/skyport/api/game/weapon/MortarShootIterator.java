@@ -1,7 +1,7 @@
 package skyport.api.game.weapon;
 
-import java.util.List;
 import java.util.ArrayList;
+import java.util.List;
 
 import skyport.api.SkyportClient;
 import skyport.api.game.Action;
@@ -36,8 +36,9 @@ public class MortarShootIterator implements ShootActionIterator {
                 kOffset++;
                 jOffset = -maxDistance;
             }
-            if (!hasNext())
+            if (!hasNext()) {
                 break;
+            }
             currPoint = new Point(from.getJ() + jOffset, from.getK() + kOffset);
         } while (from.distance(currPoint) > maxDistance || map.getData(currPoint).equals(Tile.VOID));
     }

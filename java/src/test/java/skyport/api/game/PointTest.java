@@ -28,36 +28,36 @@ public class PointTest {
 
     @Test
     public void testDirectionUp() {
-        assertEquals(Direction.up, p.direction(new Point(0, 0)));
+        assertEquals(Direction.UP, p.direction(new Point(0, 0)));
     }
 
     @Test
     public void testDirectionDown() {
-        assertEquals(Direction.down, p.direction(new Point(2, 2)));
+        assertEquals(Direction.DOWN, p.direction(new Point(2, 2)));
     }
 
     @Test
     public void testDirectionRightUp() {
-        assertEquals(Direction.rightUp, p.direction(new Point(0, 1)));
+        assertEquals(Direction.RIGHT_UP, p.direction(new Point(0, 1)));
     }
 
     @Test
     public void testDirectionRightDown() {
-        assertEquals(Direction.rightDown, p.direction(new Point(1, 2)));
+        assertEquals(Direction.RIGHT_DOWN, p.direction(new Point(1, 2)));
     }
 
     @Test
     public void testDirectionLeftUp() {
-        assertEquals(Direction.leftUp, p.direction(new Point(1, 0)));
+        assertEquals(Direction.LEFT_UP, p.direction(new Point(1, 0)));
     }
 
     @Test
     public void testDirectionLeftDown() {
-        assertEquals(Direction.leftDown, p.direction(new Point(2, 1)));
+        assertEquals(Direction.LEFT_DOWN, p.direction(new Point(2, 1)));
     }
 
     @Test
     public void testDirectionFail() {
-        assertEquals(Direction.none, p.direction(new Point(0, 2)));
+        assertEquals(Direction.NONE, p.direction(new Point(0, 2)));
     }
 }

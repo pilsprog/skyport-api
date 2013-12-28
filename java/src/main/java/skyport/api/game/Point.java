@@ -65,19 +65,19 @@ public class Point implements Comparable<Point> {
         int i = (int) (Math.atan2(j - p.getJ(), k - p.getK()) * 180 / Math.PI);
         switch (i) {
         case -135:
-            return Direction.down;
+            return Direction.DOWN;
         case -90:
-            return Direction.leftDown;
+            return Direction.LEFT_DOWN;
         case 180:
-            return Direction.rightDown;
+            return Direction.RIGHT_DOWN;
         case 45:
-            return Direction.up;
+            return Direction.UP;
         case 90:
-            return Direction.rightUp;
+            return Direction.RIGHT_UP;
         case 0:
-            return Direction.leftUp;
+            return Direction.LEFT_UP;
         default:
-            return Direction.none;
+            return Direction.NONE;
         }
 
     }
@@ -124,19 +124,19 @@ public class Point implements Comparable<Point> {
 
     public Point adjacent(Direction dir) {
         switch (dir) {
-        case down:
+        case DOWN:
             return new Point(j + 1, k + 1);
-        case leftDown:
+        case LEFT_DOWN:
             return new Point(j + 1, k);
-        case leftUp:
+        case LEFT_UP:
             return new Point(j, k - 1);
-        case none:
+        case NONE:
             return null;
-        case rightDown:
+        case RIGHT_DOWN:
             return new Point(j, k + 1);
-        case rightUp:
+        case RIGHT_UP:
             return new Point(j - 1, k);
-        case up:
+        case UP:
             return new Point(j - 1, k - 1);
         default:
             return null;

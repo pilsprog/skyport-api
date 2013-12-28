@@ -32,14 +32,14 @@ public class LaserShootIterator implements ShootActionIterator {
 
         this.jOffset = 0;
         this.kOffset = 0;
-        this.nextDirection = Direction.down;
+        this.nextDirection = Direction.DOWN;
 
         updateNext();
     }
 
     @Override
     public boolean hasNext() {
-        return !nextDirection.equals(Direction.none);
+        return !nextDirection.equals(Direction.NONE);
     }
 
     private void updateNext() {
@@ -62,13 +62,13 @@ public class LaserShootIterator implements ShootActionIterator {
 
     private int updateJOffset(int jIndex, Direction dir) {
         switch (dir) {
-        case down:
+        case DOWN:
             return ++jIndex;
-        case leftDown:
+        case LEFT_DOWN:
             return ++jIndex;
-        case rightUp:
+        case RIGHT_UP:
             return --jIndex;
-        case up:
+        case UP:
             return --jIndex;
         default:
             return jIndex;
@@ -77,13 +77,13 @@ public class LaserShootIterator implements ShootActionIterator {
 
     private int updateKOffset(int kIndex, Direction dir) {
         switch (dir) {
-        case down:
+        case DOWN:
             return ++kIndex;
-        case leftUp:
+        case LEFT_UP:
             return --kIndex;
-        case rightDown:
+        case RIGHT_DOWN:
             return ++kIndex;
-        case up:
+        case UP:
             return --kIndex;
         default:
             return kIndex;
@@ -92,25 +92,25 @@ public class LaserShootIterator implements ShootActionIterator {
 
     private void newDirection() {
         switch (nextDirection) {
-        case down:
-            nextDirection = Direction.leftDown;
+        case DOWN:
+            nextDirection = Direction.LEFT_DOWN;
             break;
-        case leftDown:
-            nextDirection = Direction.leftUp;
+        case LEFT_DOWN:
+            nextDirection = Direction.LEFT_UP;
             break;
-        case leftUp:
-            nextDirection = Direction.rightDown;
+        case LEFT_UP:
+            nextDirection = Direction.RIGHT_DOWN;
             break;
-        case rightDown:
-            nextDirection = Direction.rightUp;
+        case RIGHT_DOWN:
+            nextDirection = Direction.RIGHT_UP;
             break;
-        case rightUp:
-            nextDirection = Direction.up;
+        case RIGHT_UP:
+            nextDirection = Direction.UP;
             break;
-        case up:
-            nextDirection = Direction.none;
+        case UP:
+            nextDirection = Direction.NONE;
             break;
-        case none:
+        case NONE:
             assert false;
             break;
         default:

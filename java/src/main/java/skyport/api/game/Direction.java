@@ -8,9 +8,18 @@ import com.google.gson.annotations.SerializedName;
  * @author Bjarte
  */
 public enum Direction {
-    up, down, @SerializedName("right-up")
-    rightUp, @SerializedName("right-down")
-    rightDown, @SerializedName("left-up")
-    leftUp, @SerializedName("left-down")
-    leftDown, none
+    @SerializedName("up")
+    UP,
+    @SerializedName("down")
+    DOWN, 
+    @SerializedName("right-up")
+    RIGHT_UP, 
+    @SerializedName("right-down")
+    RIGHT_DOWN, 
+    @SerializedName("left-up")
+    LEFT_UP, 
+    @SerializedName("left-down")
+    LEFT_DOWN, 
+    @SerializedName("none")
+    NONE
 }

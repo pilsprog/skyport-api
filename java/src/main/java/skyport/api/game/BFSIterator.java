@@ -27,7 +27,7 @@ public class BFSIterator implements Iterator<Point> {
         this.pathData = new TreeMap<Point, BFSPointData>();
 
         this.queue.add(from);
-        this.pathData.put(from, new BFSPointData(Direction.none, 0, null));
+        this.pathData.put(from, new BFSPointData(Direction.NONE, 0, null));
     }
 
     @Override
